@@ -1,10 +1,17 @@
 from django.db import models
+from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager
 
 # Create your models here.
 
 ################################
 # User - Authentication purposes
 ################################
+# User model is the built-in Django model. Provides:
+# username *required
+# email *required
+# password *required
+# first_name
+# last_name
 
 ################################
 # Lecturer - Lecturer information (refer User)
@@ -12,7 +19,7 @@ from django.db import models
 class Lecturer(models.Model):
     Lect_Name = models.CharField(max_length=500)
     Lect_Email = models.EmailField(max_length=254)
-    #UserID (foreign key User)
+    UserID = models.OneToOneField(User, on_delete=models.PROTECT, to_field='username', default='ID Number')
 
 ################################
 # Admin - Admin information (refer User)
@@ -20,38 +27,42 @@ class Lecturer(models.Model):
 class Admin(models.Model):
     Admin_Name = models.CharField(max_length=500)
     Admin_Email = models.EmailField(max_length=254)
-    #UserID (foreign key User)
+    UserID = models.OneToOneField(User, on_delete=models.PROTECT, to_field='username', default='ID Number')
 
 ################################
-# Request - Edit course details request
+# Course - Course information
 ################################
-class Request(models.Model):
-    RequestID = models.CharField(max_length=10) #eg: RQ + id = RQ1, RQ2...
-    #CourseID (foreign key Course)
-    #UserID (foreign key User)
-    Status = models.BooleanField() #True: Approved, False: Denied
+class Course(models.Model):
+    CourseID = models.CharField(max_length=10, unique=True) #eg: ABC1234
+    Course_Name = models.CharField(max_length=500)
+    Course_Description = models.TextField(default='Description')
 
 ################################
 # Class - Class information
 ################################
 class Class(models.Model):
     ClassID = models.CharField(max_length=10) #eg: TC01
-    #CourseID (foreign key Course)
-
-################################
-# Course - Course information
-################################
-class Course(models.Model):
-    CourseID = models.CharField(max_length=10) #eg: ABC1234
-    Course_Name = models.CharField(max_length=500)
-    #Course_Description = models.
+    CourseID = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        default='1'
+    )
+    Lecturer = models.ForeignKey(
+        Lecturer,
+        on_delete=models.CASCADE,
+        default='1'
+    )
 
 ################################
 # CourseTopic - Topics for each course information
 ################################
 class CourseTopic(models.Model):
     TopicID = models.AutoField(primary_key=True)
-    #CourseID (foreign key Course)
+    CourseID = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        default='1'
+    )
     Topic_No = models.IntegerField()
     Topic_Name = models.CharField(max_length=500)
 
@@ -60,18 +71,43 @@ class CourseTopic(models.Model):
 ################################
 class CourseObjective(models.Model):
     ObjectiveID = models.AutoField(primary_key=True)
-    #CourseID (foreign key Course)
+    CourseID = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        default='1'
+    )
     Objective_No = models.CharField(max_length=4) #CO01
     Objective_Name = models.CharField(max_length=700)
 
 ################################
-# CourseObjective - Objectives for course
+# Request - Edit course details request
+################################
+class Request(models.Model):
+    RequestID = models.CharField(max_length=10) #eg: RQ + id = RQ1, RQ2...
+    CourseID = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        default='1'
+    )
+    Requestor = models.ForeignKey(
+        Lecturer,
+        on_delete=models.CASCADE,
+        default='1'
+    )
+    Status = models.BooleanField() #True: Approved, False: Denied
+
+################################
+# Assessment - Student's Assessment
 ################################
 class Assessment(models.Model):
-    AssessmentID = models.AutoField(primary_key=True)
+    AssessmentID = models.AutoField(primary_key=True, unique=True) #1,2,3,4,etc..
     Assessment_Name = models.CharField(max_length=500)
     Assessment_Desc = models.TextField()
-    #CourseID (foreign key Course)
+    CourseID = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        default='1'
+    )
 
 ################################
 # Student - Student information
@@ -85,7 +121,11 @@ class Student(models.Model):
 ################################
 class Question(models.Model):
     QuestionID = models.AutoField(primary_key=True)
-    #AssessmentID (foreign key Assessment)
+    AssessmentID = models.ForeignKey(
+        Assessment,
+        on_delete=models.PROTECT,
+        default='1'
+    )
     Question = models.TextField()
     Answer_1 = models.CharField(max_length=500)
     Answer_2 = models.CharField(max_length=500)
@@ -99,5 +139,5 @@ class Question(models.Model):
     ]
     Correct_Answer = models.CharField(max_length=1, choices=ANSWER_CHOICES, default='A')
     Answer_Explanation = models.TextField()
-    #Topics (array of topics according to CourseID in Assessment info)
+    #Topics (array of topics according to CourseID in Assessment info) ArrayField
     #Objectives (array of objectives according to CourseID in assessment)

@@ -1,0 +1,123 @@
+{% extends "base-admin.html" %}
+{% load static %}
+
+{% block title %}| Home{% endblock %}
+
+{% block base_header %}
+<header id="header" class="header">
+    <div class="header-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="text-container">
+                        <h1>Hi, <span class="turquoise">{{ name }}</span>.</h1>
+                    </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+                <div class="col-lg-6">
+                    <div class="image-container">
+                        <img class="img-fluid" src="{% static 'images/AdminLogin.svg' %}" alt="alternative">
+                    </div> <!-- end of image-container -->
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of header-content -->
+</header> <!-- end of header -->
+{% endblock base_header %}
+
+{% block base_breadcrumbs %}
+<!-- nothing here -->
+{% endblock base_breadcrumbs %}
+
+{% block content %}
+<!-- Lecturers -->
+<div class="slider-2 assessments-list" id="lecturerslist">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Lecturer</h2>
+                <!-- Table -->
+                <a href="6.1.2-lectdetails.html">go to lect details</a>
+                <a href="6.2-newlectform.html">new lecturer</a>
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">E-mail</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for lecturer in lecturers %}                          
+                      <tr>
+                        <td>{{ lecturer.UserID }}</td>
+                        <td>{{ lecturer.Lect_Name }}</td>
+                        <td>{{ lecturer.Lect_Email }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  <!-- end of table -->
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of slider-2 -->
+<!-- end of Assessments -->
+
+<!-- Course -->
+<div class="slider-2 courses-list" id="courseslist">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Course & Class</h2>
+                <!-- Table -->
+                <a href="7.2-classreport.html">go to class details and report</a>
+                <a href="7.4-newclass.html">add new class</a>
+                <a href="9.1-coursedetails.html">go to course details</a>
+                <a href="9.3-newcourse.html">add new course</a>
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Course</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for course in courses %}
+                      <tr>
+                        <td>{{ course.CourseID }}</td>
+                        <td>{{ course.Course_Name }}</td>                            
+                      </tr>
+                      {% endfor %}                          
+                    </tbody>
+                  </table>
+                  <!-- end of table -->
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of slider-2 -->
+<!-- end of Courses -->
+
+<!-- Details Lightboxes -->
+<!-- Details Lightbox 1 - List of Request -->
+<div id="details-lightbox-1" class="lightbox-basic zoom-anim-dialog mfp-hide">
+  <div class="container">
+      <div class="row">
+          <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
+          <div class="col-lg-4">
+              <h3>Edit Request</h3>
+              <hr>
+              <ol>
+                <li>
+                  <a href="8.1-request.html">Request 1</a>
+                </li>
+                <li>Request 2</li>
+                <li>Request 3</li>
+              </ol>
+          </div> <!-- end of col -->
+      </div> <!-- end of row -->
+  </div> <!-- end of container -->
+</div> <!-- end of lightbox-basic -->
+<!-- end of details lightbox 1 -->
+{% endblock content %}

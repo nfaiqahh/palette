@@ -1,0 +1,130 @@
+{% extends "base-lect.html" %}
+{% load static %}
+
+{% block title %}| Home{% endblock %}
+
+{% block base_header %}
+<header id="header" class="header">
+    <div class="header-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="text-container">
+                        <h1>Hi, <span class="turquoise">{{ name }}</span>.</h1>
+                    </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+                <div class="col-lg-6">
+                    <div class="image-container">
+                        <img class="img-fluid" src="{% static 'images/LecturerLogin.svg' %}" alt="alternative">
+                    </div> <!-- end of image-container -->
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of header-content -->
+</header> <!-- end of header -->
+{% endblock base_header %}
+
+{% block base_breadcrumbs %}
+<!-- nothing here -->
+{% endblock base_breadcrumbs %}
+
+{% block content %}
+<!-- Assessment -->
+<div class="slider-2 assessments-list" id="assessmentslist">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Assessments</h2>
+                <a href="4.2-assessmentreport.html">go to assessment report</a>
+                <a class="popup-with-move-anim" href="#details-lightbox-1">create new assessment</a>
+                <!-- Table -->
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Course</th>
+                      </tr>
+                    </thead>
+                    <tbody>                          
+                      <tr>
+                        <td>PCE-A1</td>
+                        <td>Post Class Exercise 1</td>
+                        <td>TSE 2251</td>
+                      </tr>
+                      <tr>
+                        <td>SRQA-Mid1</td>
+                        <td>Mid-Term Test - Software Reliability</td>
+                        <td>TIS 3151</td>
+                      </tr>
+                      <tr>
+                        <td>QUIZ_01</td>
+                        <td>Quiz 1</td>
+                        <td>TIS 3151</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- end of table -->
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of slider-2 -->
+<!-- end of Assessments -->
+
+<!-- New Assessment Lightbox -->
+<!-- Details Lightbox 1 - Assessment Name -->
+<div id="details-lightbox-1" class="lightbox-basic zoom-anim-dialog mfp-hide">
+  <div class="container">
+    <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
+    <h3>New Assessment</h3>
+    <br>
+    <h5>Assessment Name</h5>
+    <input type="text" class="form-control" name="" id="">
+    <br>
+    <h5>Course</h5>
+    <select class="form-control">
+      <option selected>Choose...</option>
+      <option>CourseID 1</option>
+      <option>CourseID 2</option>
+      <option>CourseID 3</option>
+    </select>
+    <br><br>
+    <a class="btn-solid-reg mfp-close page-scroll" href="4.3-newassessment.html">CREATE</a>
+  </div> <!-- end of container -->
+</div> <!-- end of lightbox-basic -->
+<!-- end of details lightbox 1 -->
+
+<!-- Class -->
+<div class="slider-2 classes-list" id="classeslist">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Courses & Classes</h2>
+                <a href="3.2-classreport.html">go to class report</a>
+                <a href="5.2-coursedetails.html">course details</a>
+                <!-- Table -->
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Course</th>
+                        <th scope="col">Class</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for class in classes %}                          
+                      <tr>
+                        <td>{{ class.CourseID.CourseID }} - {{ class.CourseID.Course_Name }}</td>
+                        <td>{{ class.ClassID }}</td>                            
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  <!-- end of table -->
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of slider-2 -->
+<!-- end of Classes -->
+{% endblock content %}
