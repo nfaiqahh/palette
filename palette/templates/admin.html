@@ -1,4 +1,4 @@
-{% extends "base-admin.html" %}
+{% extends "site-base.html" %}
 {% load static %}
 
 {% block title %}| Home{% endblock %}
@@ -33,11 +33,32 @@
 <div class="slider-2 assessments-list" id="lecturerslist">
     <div class="container">
         <div class="row">
+          <div class="col-lg-12">
+            <!-- Messages -->
+            <div> 
+              {% if messages %}
+              <div class="alert alert-info messages">
+                  {% for message in messages %}
+                  {{ message }}
+                  {% endfor %}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              {% endif %}
+            </div>
+          <!-- end of messages -->
+          </div>
+        </div>
+        <div class="row">
             <div class="col-lg-12">
                 <h2>Lecturer</h2>
                 <!-- Table -->
-                <a href="6.1.2-lectdetails.html">go to lect details</a>
-                <a href="6.2-newlectform.html">new lecturer</a>
+                <p class="right">
+                  <a href="{% url 'addlecturer' %}" style="text-decoration: none;">
+                    New Lecturer <i class="far fa-plus-square"></i>
+                  </a>
+                </p>
                 <table class="table table-hover">
                     <thead>
                       <tr>
@@ -49,7 +70,14 @@
                     <tbody>
                       {% for lecturer in lecturers %}                          
                       <tr>
-                        <td>{{ lecturer.UserID }}</td>
+                        <td>
+                          <form action="{% url 'chooselecturer' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="lecturerid" value="{{ lecturer.UserID }}">
+                            <input type="submit" style="background:none; border: none; color: #626262; text-decoration: underline; cursor: pointer;"
+                            value="{{ lecturer.UserID }}"/>
+                          </form>                          
+                        </td>
                         <td>{{ lecturer.Lect_Name }}</td>
                         <td>{{ lecturer.Lect_Email }}</td>
                       </tr>
@@ -73,20 +101,24 @@
                 <!-- Table -->
                 <a href="7.2-classreport.html">go to class details and report</a>
                 <a href="7.4-newclass.html">add new class</a>
-                <a href="9.1-coursedetails.html">go to course details</a>
                 <a href="9.3-newcourse.html">add new course</a>
                 <table class="table table-hover">
                     <thead>
-                      <tr>
-                        <th scope="col">ID</th>
+                      <tr>        
                         <th scope="col">Course</th>
                       </tr>
                     </thead>
                     <tbody>
                       {% for course in courses %}
                       <tr>
-                        <td>{{ course.CourseID }}</td>
-                        <td>{{ course.Course_Name }}</td>                            
+                        <td>
+                          <form action="{% url 'choosecourse' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="courseID" value="{{course.id}}">
+                            <input type="submit" style="background:none; border: none; color: #626262; text-decoration: underline; cursor: pointer;"
+                            value="{{ course.CourseID }} - {{ course.Course_Name }}"/>
+                          </form>
+                        </td>                            
                       </tr>
                       {% endfor %}                          
                     </tbody>
@@ -98,26 +130,4 @@
     </div> <!-- end of container -->
 </div> <!-- end of slider-2 -->
 <!-- end of Courses -->
-
-<!-- Details Lightboxes -->
-<!-- Details Lightbox 1 - List of Request -->
-<div id="details-lightbox-1" class="lightbox-basic zoom-anim-dialog mfp-hide">
-  <div class="container">
-      <div class="row">
-          <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
-          <div class="col-lg-4">
-              <h3>Edit Request</h3>
-              <hr>
-              <ol>
-                <li>
-                  <a href="8.1-request.html">Request 1</a>
-                </li>
-                <li>Request 2</li>
-                <li>Request 3</li>
-              </ol>
-          </div> <!-- end of col -->
-      </div> <!-- end of row -->
-  </div> <!-- end of container -->
-</div> <!-- end of lightbox-basic -->
-<!-- end of details lightbox 1 -->
 {% endblock content %}

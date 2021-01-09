@@ -1,0 +1,46 @@
+{% extends "site-base.html" %}
+{% load static %}
+
+{% block title %}| Lecturer{% endblock %}
+
+{% block headertitle %}New Lecturer{% endblock headertitle %}
+
+{% block breadcrumbs %}
+<a href="{% url 'mainmenu' %}">Home</a><i class="fa fa-angle-double-right"></i>
+<span>New Lecturer</span>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="ex-basic-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1"> 
+
+                <!-- Content 1: New Lecturer Details-->
+                <div class="text-container">
+                    <form action="{% url 'updatelect' %}" method="POST">
+                        {% csrf_token %}                        
+                        <input type="hidden" name="add_or_edit" value="add">
+                        <div class="form-group">
+                            <label for="lectID" class="required">Lecturer ID</label>
+                            <input type="text" name="LecturerID" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lectname" class="required">Lecturer Name</label>
+                            <input type="text" name="Lect_Name" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lectemail" class="required">Lecturer Email</label>
+                            <input type="text" name="Lect_Email" class="form-control" required>
+                        </div>
+                        <input type="submit" class="btn-outline-reg back" value="CONFIRM">
+                        <a class="btn-outline-reg back" href="{% url 'mainmenu' %}">CANCEL</a>
+                    </form>                        
+                </div> <!-- end of content 1 -->
+            </div> <!-- end of col-->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of ex-basic-2 -->
+{% endblock content %}

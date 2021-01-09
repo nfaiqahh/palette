@@ -1,0 +1,59 @@
+{% extends "site-base.html" %}
+{% load static %}
+
+{% block title %}| Course{% endblock %}
+
+{% block headertitle %}Course Details{% endblock headertitle %}
+
+{% block breadcrumbs %}
+<a href="{% url 'mainmenu' %}">Home</a><i class="fa fa-angle-double-right"></i>
+<a href="lecturer/{{ course.id }}/{{ courseid }}">{{ course.CourseID }} - {{ course.Course_Name }}</a><i class="fa fa-angle-double-right"></i>
+<span>Update</span>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="ex-basic-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <!-- Content 1: Course Code and Course Name -->
+                <div class="text-container">
+                    <h3>{{ course.CourseID }} - {{ course.Course_Name }}</h3>
+                </div> <!-- end of content 1-->
+                
+                <!-- Content 2: Course Details-->
+                <div class="text-container">
+                    <form action="{% url 'updatecourse' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="add_or_edit" value="edit">
+                        <div class="form-group">
+                            <label for="coursedesc">Course Description</label>
+                            <textarea name="coursedesc" class="form-control" rows="3" placeholder="{{ course.Course_Description }}"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="coursetopic">Topics</label>
+                            {% for topics in course_topics %}
+                            <span>Chapter {{topics.Topic_No}}</span>
+                            <input type="text" name="{{ topics.Topic_No }}" class="form-control" value="{{ topics.Topic_Name }}">
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="courseobj">Objectives</label>
+                            {% for objs in course_objectives %}
+                            <span>{{ objs.Objective_No }}</span>
+                            <input type="text" name="{{ objs.Objective_No }}" class="form-control" value="{{ objs.Objective_Name }}">
+                            {% endfor %}
+                        </div>
+                        <input type="hidden" name="courseid" value="{{ course.id }}">
+                        <input type="submit" class="btn-outline-reg back" value="CONFIRM">
+                        <a class="btn-outline-reg back" href="lecturer/{{ course.id }}/{{ courseid }}">CANCEL</a>
+                    </form>
+                    
+                </div> <!-- end of content 2 -->
+            </div> <!-- end of col-->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of ex-basic-2 -->
+{% endblock content %}

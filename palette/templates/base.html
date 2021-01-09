@@ -19,6 +19,15 @@
 	
 	<!-- Favicon  -->
     <link rel="shortcut icon" href="{% static 'images/favicon.png' %}">
+    <style>
+        .required:after{
+            content: " *";
+            color: red;
+            font-size: xx-large;
+            margin: 0px 0px 0px 0px;
+            padding: 0 0 0 0;
+        }
+    </style>
 </head>
 <body data-spy="scroll" data-target=".fixed-top">
     
@@ -53,7 +62,7 @@
                 {% endblock base_navbar %}
                 <!-- Logout -->          
                 <li class="nav-item dropdown"> 
-                    <a class="nav-link dropdown-toggle page-scroll" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ name }}<br><strong>{{ request.user }}</strong></a>
+                    <a class="nav-link dropdown-toggle page-scroll" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request.session.name }}<br><strong>{{ request.user }}</strong></a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{% url 'logout' %}"><span class="item-text">Log Out</span></a>
                     </div>
@@ -78,6 +87,28 @@
     {% block content %}
     {% endblock content %}
     <!-- end of Content -->
+
+    <!-- Details Lightboxes -->
+    <!-- Details Lightbox 1 - List of Request -->
+    <div id="request" class="lightbox-basic zoom-anim-dialog mfp-hide">
+        <div class="container">
+            <div class="row">
+                <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
+                <div class="col-lg-4">
+                    <h3>Edit Request</h3>
+                    <hr>
+                    <ol>
+                    <li>
+                        <a href="8.1-request.html">Request 1</a>
+                    </li>
+                    <li>Request 2</li>
+                    <li>Request 3</li>
+                    </ol>
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of lightbox-basic -->
+    <!-- end of details lightbox 1 -->
 
     <!-- Copyright -->
     <div class="copyright">

@@ -1,0 +1,47 @@
+{% extends "site-base.html" %}
+{% load static %}
+
+{% block title %}| Lecturer{% endblock %}
+
+{% block headertitle %}Lecturer Details{% endblock headertitle %}
+
+{% block breadcrumbs %}
+<a href="{% url 'mainmenu' %}">Home</a><i class="fa fa-angle-double-right"></i>
+<a href="lecturer/{{lecturer.UserID}}">{{ lecturer.Lect_Name }} ({{ lecturer.UserID }})</a><i class="fa fa-angle-double-right"></i>
+<span>Update</span>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="ex-basic-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <!-- Content 1: Course Code and Course Name -->
+                <div class="text-container">
+                    <h3>{{ lecturer.Lect_Name }}</h3>
+                    <h4>{{ lecturer.UserID }}</h4>
+                </div> <!-- end of content 1-->
+                
+                <!-- Content 2: Course Details-->
+                <form action="{% url 'updatelect' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="add_or_edit" value="edit">
+                    <div class="text-container">
+                        <div class="form-group">
+                            <label for="lectname">Lecturer Name</label>
+                            <input type="text" name="Lect_Name" class="form-control" value="{{ lecturer.Lect_Name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="lectemail">Lecturer Email</label>
+                            <input type="text" name="Lect_Email" class="form-control" value="{{ lecturer.Lect_Email }}">
+                        </div>                   
+                    </div> <!-- end of content 2 -->
+                    <input type="hidden" name="lecturerid" value="{{ lecturer.UserID }}">
+                    <input type="submit" class="btn-outline-reg back" value="CONFIRM">
+                    <a class="btn-outline-reg back" href="lecturer/{{lecturer.UserID}}">CANCEL</a>
+                </form>                
+            </div> <!-- end of col-->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of ex-basic-2 -->
+{% endblock content %}

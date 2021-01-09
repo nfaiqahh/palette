@@ -1,0 +1,61 @@
+{% extends "site-base.html" %}
+{% load static %}
+
+{% block title %}| Course{% endblock %}
+
+{% block headertitle %}New Course{% endblock headertitle %}
+
+{% block breadcrumbs %}
+<a href="{% url 'mainmenu' %}">Home</a><i class="fa fa-angle-double-right"></i>
+<span>New Course</span>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="ex-basic-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">                
+                <!-- Content 2: Course Details-->
+                <div class="text-container">
+                    <form action="{% url 'updatecourse' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="add_or_edit" value="add">
+                        <div class="form-group">
+                            <label for="CourseID" class="required">Course Code</label>
+                            <input type="text" name="CourseID" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Course_Name" class="required">Course Name</label>
+                            <input type="text" name="Course_Name" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Course_Description" class="required">Course Description</label>
+                            <textarea name="Course_Description" class="form-control" rows="3" required></textarea>
+                        </div>
+
+                        <!-- <div class="form-group">
+                            <label for="coursetopic">Topics</label>
+                            <input type="text" id="coursetopic" class="form-control">
+                            <br>
+                            <input type="text" id="coursetopic" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="courseobj">Objectives</label>
+                            <input type="text" id="courseobj" class="form-control">
+                            <br>
+                            <input type="text" id="courseobj" class="form-control">
+                        </div> -->
+
+                        
+                        <input type="submit" class="btn-outline-reg back" value="CONFIRM">
+                        <a class="btn-outline-reg back" href="{% url 'mainmenu' %}">CANCEL</a>
+                    </form>                    
+                </div> <!-- end of content 2 -->
+            </div> <!-- end of col-->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of ex-basic-2 -->
+{% endblock content %}

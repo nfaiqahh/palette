@@ -1,0 +1,72 @@
+{% extends "site-base.html" %}
+{% load static %}
+
+{% block title %}| Lecturer{% endblock %}
+
+{% block headertitle %}Lecturer Details{% endblock headertitle %}
+
+{% block breadcrumbs %}
+<a href="{% url 'mainmenu' %}">Home</a><i class="fa fa-angle-double-right"></i><span>{{ lecturer.Lect_Name }}</span>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="ex-basic-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+              <!-- Messages -->
+              <div> 
+                {% if messages %}
+                <div class="alert alert-info messages">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endif %}
+              </div>
+            <!-- end of messages -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <!-- Content 1: Course Code and Course Name -->
+                <div class="text-container">
+                    <h3>{{ lecturer.Lect_Name }}</h3>
+                    <h4>{{ lecturer.UserID }}</h4>
+                    <form action="{% url 'editlecturer' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="lecturerid" value="{{ lecturer.UserID }}">
+                        <p class="right">
+                            Edit Details
+                            <button type="submit" style="border-style: none; border-radius: 5px;">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </p>
+                    </form>                   
+                </div> <!-- end of content 1-->
+                
+                <!-- Content 2: Course Details-->
+                <div class="text-container">
+                    <div class="row">
+                        <div>
+                            <h6>Lecturer Email</h6>
+                            <p>{{ lecturer.Lect_Email }}</p>
+                            
+                            <h6>Classes In Charge</h6>
+                            <ol class="li-space-lg">
+                                {% for classes in class_incharge %}
+                                <li><b>{{ classes.CourseID.CourseID }} - {{ classes.CourseID.Course_Name }}</b>: {{classes.ClassID}}</li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    </div>
+                </div> <!-- end of content 2 -->
+                <a class="btn-outline-reg back" href="{% url 'mainmenu' %}">BACK</a>
+            </div> <!-- end of col-->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of ex-basic-2 -->
+{% endblock content %}

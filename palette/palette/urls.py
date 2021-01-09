@@ -21,5 +21,18 @@ urlpatterns = [
     path('', mainviews.mainmenu, name='mainmenu'),
     path('home', mainviews.home, name='home'),
     path('logout', mainviews.logout_view, name='logout'),
+    # COURSE
+    path('course', mainviews.choosecourse, name='choosecourse'),
+    path('course/<int:id>/<slug:courseid>', mainviews.viewcourse, name='viewcourse'),
+    path('edit-course-details', mainviews.editcourse, name='editcourse'),
+    path('add-course', mainviews.addcourse, name='addcourse'),
+    path('updatecourse', mainviews.updatecoursedb, name='updatecourse'),
+    # LECTURER
+    path('lecturer', mainviews.chooselecturer, name='chooselecturer'), #redirect to 'viewlecturer'
+    path('lecturer/<str:lecturerid>', mainviews.viewlecturer, name='viewlecturer'),
+    path('edit-lecturer-details', mainviews.editlecturer, name='editlecturer'),
+    path('add-lecturer', mainviews.addlecturer, name='addlecturer'),
+    path('updatelect', mainviews.updatelecturerdb, name='updatelect'), #redirect to 'viewlecturer'
+    # ADMIN
     path('admin', admin.site.urls),    
 ]

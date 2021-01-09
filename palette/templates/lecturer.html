@@ -1,4 +1,4 @@
-{% extends "base-lect.html" %}
+{% extends "site-base.html" %}
 {% load static %}
 
 {% block title %}| Home{% endblock %}
@@ -113,8 +113,15 @@
                     </thead>
                     <tbody>
                       {% for class in classes %}                          
-                      <tr>
-                        <td>{{ class.CourseID.CourseID }} - {{ class.CourseID.Course_Name }}</td>
+                      <tr>    
+                        <td>
+                          <form action="{% url 'choosecourse' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="courseID" value="{{class.CourseID.id}}">
+                            <input type="submit" style="background:none; border: none; color: #626262; text-decoration: underline; cursor: pointer;"
+                            value="{{ class.CourseID.CourseID }} - {{ class.CourseID.Course_Name }}"/>
+                          </form>
+                        </td>
                         <td>{{ class.ClassID }}</td>                            
                       </tr>
                       {% endfor %}
