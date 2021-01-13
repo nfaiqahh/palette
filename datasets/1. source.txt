@@ -1,0 +1,3 @@
+lecturer.csv - https://www.random-name-generator.com/malaysia?country=ms_MY&gender=&n=20&s=18828#form
+admin.csv - https://www.random-name-generator.com/malaysia?country=ms_MY&gender=&n=3&s=56737#form
+student.csv - random name generator

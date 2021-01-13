@@ -25,8 +25,8 @@ urlpatterns = [
     path('course', mainviews.choosecourse, name='choosecourse'),
     path('course/<int:id>/<slug:courseid>', mainviews.viewcourse, name='viewcourse'),
     path('edit-course-details', mainviews.editcourse, name='editcourse'),
-    path('add-course', mainviews.addcourse, name='addcourse'),
-    path('updatecourse', mainviews.updatecoursedb, name='updatecourse'),
+    #path('add-course', mainviews.addcourse, name='addcourse'),
+    #path('updatecourse', mainviews.updatecoursedb, name='updatecourse'),
     # LECTURER
     path('lecturer', mainviews.chooselecturer, name='chooselecturer'), #redirect to 'viewlecturer'
     path('lecturer/<str:lecturerid>', mainviews.viewlecturer, name='viewlecturer'),

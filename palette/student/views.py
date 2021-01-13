@@ -125,49 +125,49 @@ def editcourse(request):
     }
     return render(request, 'coursedetails-edit.html', context)
 
-def updatecoursedb(request):
-    add_or_edit = request.POST['add_or_edit']
+# def updatecoursedb(request):
+#     add_or_edit = request.POST['add_or_edit']
 
-    if add_or_edit == 'edit':
-        courseid = request.POST['courseid']
-        coursedesc = request.POST['coursedesc']
-        topic_count = CourseTopic.objects.filter(CourseID=courseid).count()
-        obj_count = CourseObjective.objects.filter(CourseID=courseid).count()
-        topics = []
-        objectives = []
-        for i in range(1, topic_count+1):
-            topicno = str(i)
-            topics.append(request.POST['topicno'])
-        for j in range(1,obj_count+1):
-            objno = 
+#     if add_or_edit == 'edit':
+#         courseid = request.POST['courseid']
+#         coursedesc = request.POST['coursedesc']
+#         topic_count = CourseTopic.objects.filter(CourseID=courseid).count()
+#         obj_count = CourseObjective.objects.filter(CourseID=courseid).count()
+#         topics = []
+#         objectives = []
+#         for i in range(1, topic_count+1):
+#             topicno = str(i)
+#             topics.append(request.POST['topicno'])
+#         for j in range(1,obj_count+1):
+#             objno = 
 
 
-        Lect_Name = request.POST['Lect_Name']
-        Lect_Email = request.POST['Lect_Email']
-        lecturerid = request.POST['lecturerid']
-        lecturer = Lecturer.objects.get(UserID=lecturerid)
-        lecturer.Lect_Name = Lect_Name
-        lecturer.Lect_Email = Lect_Email
-        lecturer.save()
-        messages.add_message(request, messages.INFO, 'Lecturer details succesfully updated!')
-        return redirect('viewlecturer', lecturerid)
+#         Lect_Name = request.POST['Lect_Name']
+#         Lect_Email = request.POST['Lect_Email']
+#         lecturerid = request.POST['lecturerid']
+#         lecturer = Lecturer.objects.get(UserID=lecturerid)
+#         lecturer.Lect_Name = Lect_Name
+#         lecturer.Lect_Email = Lect_Email
+#         lecturer.save()
+#         messages.add_message(request, messages.INFO, 'Lecturer details succesfully updated!')
+#         return redirect('viewlecturer', lecturerid)
 
-    else: #if action == 'add'        
-        lecturerid = request.POST['LecturerID'] 
-        Lect_Name = request.POST['Lect_Name']
-        Lect_Email = request.POST['Lect_Email']
-        if Lecturer.objects.filter(UserID=lecturerid).exists():
-            messages.add_message(request, messages.ERROR, 'You wanted to add a new lecturer with the same ID, are you sure?')
-            return redirect('viewlecturer', lecturerid)
-        else:
-            newlect = User.objects.create_user(lecturerid, Lect_Email, 'palette123')
-            id = Lecturer.objects.count()+1
-            insertlect = Lecturer(id=id, Lect_Name=Lect_Name, Lect_Email=Lect_Email, UserID=newlect)
-            insertlect.save()
-            messages.add_message(request, messages.INFO, 'Lecturer succesfully created!')
-            return redirect('mainmenu')
+#     else: #if action == 'add'        
+#         lecturerid = request.POST['LecturerID'] 
+#         Lect_Name = request.POST['Lect_Name']
+#         Lect_Email = request.POST['Lect_Email']
+#         if Lecturer.objects.filter(UserID=lecturerid).exists():
+#             messages.add_message(request, messages.ERROR, 'You wanted to add a new lecturer with the same ID, are you sure?')
+#             return redirect('viewlecturer', lecturerid)
+#         else:
+#             newlect = User.objects.create_user(lecturerid, Lect_Email, 'palette123')
+#             id = Lecturer.objects.count()+1
+#             insertlect = Lecturer(id=id, Lect_Name=Lect_Name, Lect_Email=Lect_Email, UserID=newlect)
+#             insertlect.save()
+#             messages.add_message(request, messages.INFO, 'Lecturer succesfully created!')
+#             return redirect('mainmenu')
 
-def addcourse(request):
+# def addcourse(request):
 
 ####################################
 # 3. LECTURER
