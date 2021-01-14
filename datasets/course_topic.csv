@@ -1,0 +1,53 @@
+﻿TopicID,Topic_No,Topic_Name,CourseID_id
+1,1,Introduction,1
+2,2,"Computer software systems performance, robustness, and functionality",1
+3,3,Kernal structure,1
+4,4,Bootstrapping,1
+5,5,I/O Devices and interrupts,1
+6,6,Processes and threads,1
+7,7,Scheduling,1
+8,8,File systems,1
+9,9,Protection and security,1
+10,1,Introduction,2
+11,2,Protocols,2
+12,3,Network Application,2
+13,4,Routing Algorithms,2
+14,5,Internetworking,2
+15,6,Congestion Control,2
+16,7,Link Layer Protocols,2
+17,1,Design trade-offs and principles of operation,3
+18,2,Signal propagation and modeling,3
+19,3,Sensing,3
+20,4,Node Architecture and Operation,3
+21,5,Applications,3
+22,1,Structured Programming,4
+23,2,Program Specification,4
+24,3,Program Proving,4
+25,4,Modularity,4
+26,5,Abstract Data Types,4
+27,6,Composite Design,4
+28,7,Software Tools,4
+29,8,Software Control Systems,4
+30,9,Program Testing,4
+31,10,Team Programming,4
+32,1,Basic concepts and design,5
+33,2,Abstraction,5
+34,3,Modularity,5
+35,4,Control Mechanism,5
+36,5,Types,5
+37,6,Declarations,5
+38,7,Syntax,5
+39,8,Semantics,5
+40,9,Language Paradigm,5
+41,1,"Variable, Operators, Data Types",6
+42,2,Precedence & Associativity,6
+43,3,Formatting & Decorators,6
+44,4,While & For Loops,6
+45,5,Strings,6
+46,6,List,6
+47,7,Tuples & Sets,6
+48,8,"Dictionary, Functions & Built-in Functions",6
+49,9,"Argument Passing, Variables & Recursion",6
+50,10,Mapping Functions & Modules,6
+51,11,Regular Expressions,6
+52,12,"Classes, Objects, Inheritance & Exception Handling",6

@@ -125,32 +125,40 @@ def editcourse(request):
     }
     return render(request, 'coursedetails-edit.html', context)
 
-# def updatecoursedb(request):
-#     add_or_edit = request.POST['add_or_edit']
+def updatecoursedb(request):
+    add_or_edit = request.POST['add_or_edit']
 
-#     if add_or_edit == 'edit':
-#         courseid = request.POST['courseid']
-#         coursedesc = request.POST['coursedesc']
-#         topic_count = CourseTopic.objects.filter(CourseID=courseid).count()
-#         obj_count = CourseObjective.objects.filter(CourseID=courseid).count()
-#         topics = []
-#         objectives = []
-#         for i in range(1, topic_count+1):
-#             topicno = str(i)
-#             topics.append(request.POST['topicno'])
-#         for j in range(1,obj_count+1):
-#             objno = 
+    if add_or_edit == 'edit':
+        id = request.POST['courseid']
+        Course_Description = request.POST['coursedesc']
+        topic_count = CourseTopic.objects.filter(CourseID=id).count()
+        topics = []
+        for i in range(1, topic_count+1):
+            topicno = str(i)
+            topics.append(request.POST[topicno])
+        
+        course = Course.objects.get(id=id)
+        course.Course_Description = Course_Description
+        course_topic = CourseTopic.objects.filter(CourseID=id)
+        x = 0
+        for topic in course_topic:
+            topic.Topic_Name = topics[x]
+            topic.save()
+            x = x+1
+        
+        course_objective = CourseObjective.objects.filter(CourseID=id)
+        for obj in course_objective:
+            objid = obj.ObjectiveID
+            a = "objective"
+            b = str(objid)
+            c = a + b
+            obj.Objective_Name = request.POST[c]
+            obj.save()
 
-
-#         Lect_Name = request.POST['Lect_Name']
-#         Lect_Email = request.POST['Lect_Email']
-#         lecturerid = request.POST['lecturerid']
-#         lecturer = Lecturer.objects.get(UserID=lecturerid)
-#         lecturer.Lect_Name = Lect_Name
-#         lecturer.Lect_Email = Lect_Email
-#         lecturer.save()
-#         messages.add_message(request, messages.INFO, 'Lecturer details succesfully updated!')
-#         return redirect('viewlecturer', lecturerid)
+        course.save()
+        messages.add_message(request, messages.INFO, 'Course details successfully updated!')
+        courseid = slugify(course.CourseID)
+        return redirect('viewcourse', id, courseid)
 
 #     else: #if action == 'add'        
 #         lecturerid = request.POST['LecturerID'] 

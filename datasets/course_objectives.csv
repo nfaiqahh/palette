@@ -1,0 +1,19 @@
+﻿ObjectiveID,Objective_No,Objective_Name,CourseID_id
+1,CO01,Understanding the theory,1
+2,CO02,Correctly applying the theory,1
+3,CO03,Practical,1
+4,CO01,Understanding the theory,2
+5,CO02,Correctly applying the theory,2
+6,CO03,Practical,2
+7,CO01,Understanding the theory,3
+8,CO02,Correctly applying the theory,3
+9,CO03,Practical,3
+10,CO01,Understanding the theory,4
+11,CO02,Correctly applying the theory,4
+12,CO03,Practical,4
+13,CO01,Understanding the theory,5
+14,CO02,Correctly applying the theory,5
+15,CO03,Practical,5
+16,CO01,Understanding the theory,6
+17,CO02,Correctly applying the theory,6
+18,CO03,Practical,6
