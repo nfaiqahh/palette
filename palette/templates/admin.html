@@ -15,7 +15,7 @@
                 </div> <!-- end of col -->
                 <div class="col-lg-6">
                     <div class="image-container">
-                        <img class="img-fluid" src="{% static 'images/AdminLogin.svg' %}" alt="alternative">
+                        <img class="img-fluid" src="{% static 'images/AdminLogin.svg' %}" alt="Admin">
                     </div> <!-- end of image-container -->
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
@@ -102,6 +102,11 @@
                 <a href="7.2-classreport.html">go to class details and report</a>
                 <a href="7.4-newclass.html">add new class</a>
                 <a href="9.3-newcourse.html">add new course</a>
+                <p class="right">
+                  <a href="{% url 'addcourse' %}" style="text-decoration: none;">
+                    New Course <i class="far fa-plus-square"></i>
+                  </a>
+                </p>
                 <table class="table table-hover">
                     <thead>
                       <tr>        

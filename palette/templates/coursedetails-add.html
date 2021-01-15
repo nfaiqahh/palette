@@ -21,34 +21,32 @@
                         {% csrf_token %}
                         <input type="hidden" name="add_or_edit" value="add">
                         <div class="form-group">
-                            <label for="CourseID" class="required">Course Code</label>
+                            <label for="CourseID" class="required"><b>Course Code</b></label>
                             <input type="text" name="CourseID" class="form-control" required>
+                            <p><i>example: "ABC 1234"</i></p>
                         </div>
 
                         <div class="form-group">
-                            <label for="Course_Name" class="required">Course Name</label>
+                            <label for="Course_Name" class="required"><b>Course Name</b></label>
                             <input type="text" name="Course_Name" class="form-control" required>
+                            <p><i>example: "Introduction to Programming Language"</i></p>
                         </div>
 
                         <div class="form-group">
-                            <label for="Course_Description" class="required">Course Description</label>
+                            <label for="Course_Description" class="required"><b>Course Description</b></label>
                             <textarea name="Course_Description" class="form-control" rows="3" required></textarea>
                         </div>
+                        
+                        <p><i>Reminder: Number of topics and objectives are final. You are not allowed to edit later.</i></p>
+                        <b>Topics</b>
+                        <button type="button" style="border-style: none; border-radius: 5px;" onclick="newtopic()"><i class="far fa-plus-square"></i></button>
+                        <br>
+                        <div class="form-group" id="topics"></div>
 
-                        <!-- <div class="form-group">
-                            <label for="coursetopic">Topics</label>
-                            <input type="text" id="coursetopic" class="form-control">
-                            <br>
-                            <input type="text" id="coursetopic" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="courseobj">Objectives</label>
-                            <input type="text" id="courseobj" class="form-control">
-                            <br>
-                            <input type="text" id="courseobj" class="form-control">
-                        </div> -->
-
+                        <b>Objectives</b>
+                        <button type="button" style="border-style: none; border-radius: 5px;" onclick="newobjective()"><i class="far fa-plus-square"></i></button>
+                        <br>
+                        <div class="form-group" id="objectives"></div>
                         
                         <input type="submit" class="btn-outline-reg back" value="CONFIRM">
                         <a class="btn-outline-reg back" href="{% url 'mainmenu' %}">CANCEL</a>
@@ -58,4 +56,36 @@
         </div> <!-- end of row -->
     </div> <!-- end of container -->
 </div> <!-- end of ex-basic-2 -->
+<script>
+    var x = 1;
+    var a = 1;
+    function newtopic(){
+        var newfield = document.createElement("input");
+        var y1 = x.toString();
+        newfield.setAttribute("name", "topics[]");
+        x = x + 1;
+        newfield.setAttribute("class","form-control");
+        var topicfield = document.getElementById("topics");
+        var newline = document.createElement("br");
+        var trytest = document.createTextNode("Topic "+ y1);
+
+        topicfield.appendChild(trytest)
+        topicfield.appendChild(newfield)
+        topicfield.appendChild(newline)
+    }
+    function newobjective(){
+        var newfield = document.createElement("input");
+        var y1 = a.toString();
+        newfield.setAttribute("name", "objectives[]");
+        a = a + 1;
+        newfield.setAttribute("class","form-control");
+        var objfield = document.getElementById("objectives");
+        var newline = document.createElement("br");
+        var trytest = document.createTextNode("Objective "+ y1);
+
+        objfield.appendChild(trytest)
+        objfield.appendChild(newfield)
+        objfield.appendChild(newline)
+    }
+</script>
 {% endblock content %}

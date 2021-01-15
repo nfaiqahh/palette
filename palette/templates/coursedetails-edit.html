@@ -27,7 +27,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="add_or_edit" value="edit">
                         <div class="form-group">
-                            <label for="coursedesc">Course Description</label>
+                            <label for="coursedesc"><b>Course Description</b></label>
                             <textarea name="coursedesc" class="form-control" rows="3">{{ course.Course_Description }}</textarea>
                         </div>
 

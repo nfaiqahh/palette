@@ -159,23 +159,52 @@ def updatecoursedb(request):
         messages.add_message(request, messages.INFO, 'Course details successfully updated!')
         courseid = slugify(course.CourseID)
         return redirect('viewcourse', id, courseid)
+    else:
+        CourseID = request.POST['CourseID'].upper()
+        Course_Name = request.POST['Course_Name']
+        Course_Description = request.POST['Course_Description']
+        if Course.objects.filter(CourseID = CourseID).exists():
+            messages.add_message(request, messages.ERROR, 'You wanted to add a new course with the same ID, are you sure?')
+            return redirect('mainmenu')
+        else:
+            id = Course.objects.count()+1
+            insertcourse = Course(id=id, CourseID=CourseID, Course_Name=Course_Name, Course_Description=Course_Description)
+            insertcourse.save()
+            topics = request.POST['topics']
+            objectives = request.POST['objectives']
+            a = 1
+            for topic in topics:
+                t_id = CourseTopic.objects.count()+1
+                inserttopics = CourseTopic(
+                    TopicID=t_id,
+                    Topic_No=a,
+                    Topic_Name=topic,
+                    CourseID=insertcourse
+                )
+                inserttopics.save()
+                a = a + 1                
+            b = 1
+            for obj in objectives:
+                o_id = CourseObjective.objects.count()+1
+                if b < 10:
+                    Objective_No = "CO0" + str(b)
+                else:
+                    Objective_No = "CO" + str(b)
+                insertobj = CourseObjective(
+                    ObjectiveID=o_id,
+                    Objective_No=Objective_No,
+                    Objective_Name=obj,
+                    CourseID=insertcourse
+                )
+                insertobj.save()
+                b = b + 1
+            messages.add_message(request, messages.INFO, 'Course succesfully created!')
+            return redirect('mainmenu')
 
-#     else: #if action == 'add'        
-#         lecturerid = request.POST['LecturerID'] 
-#         Lect_Name = request.POST['Lect_Name']
-#         Lect_Email = request.POST['Lect_Email']
-#         if Lecturer.objects.filter(UserID=lecturerid).exists():
-#             messages.add_message(request, messages.ERROR, 'You wanted to add a new lecturer with the same ID, are you sure?')
-#             return redirect('viewlecturer', lecturerid)
-#         else:
-#             newlect = User.objects.create_user(lecturerid, Lect_Email, 'palette123')
-#             id = Lecturer.objects.count()+1
-#             insertlect = Lecturer(id=id, Lect_Name=Lect_Name, Lect_Email=Lect_Email, UserID=newlect)
-#             insertlect.save()
-#             messages.add_message(request, messages.INFO, 'Lecturer succesfully created!')
-#             return redirect('mainmenu')
 
-# def addcourse(request):
+def addcourse(request):
+    context = {}
+    return render(request, 'coursedetails-add.html', context)
 
 ####################################
 # 3. LECTURER
