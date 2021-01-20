@@ -48,6 +48,8 @@
                         <br>
                         <div class="form-group" id="objectives"></div>
                         
+                        <input type="hidden" name="topic_count">
+                        <input type="hidden" name="obj_count">
                         <input type="submit" class="btn-outline-reg back" value="CONFIRM">
                         <a class="btn-outline-reg back" href="{% url 'mainmenu' %}">CANCEL</a>
                     </form>                    
@@ -61,9 +63,10 @@
     var a = 1;
     function newtopic(){
         var newfield = document.createElement("input");
+        var y = "topic"
         var y1 = x.toString();
-        newfield.setAttribute("name", "topics[]");
-        x = x + 1;
+        var z = y.concat(y1);
+        newfield.setAttribute("name", z);
         newfield.setAttribute("class","form-control");
         var topicfield = document.getElementById("topics");
         var newline = document.createElement("br");
@@ -72,12 +75,17 @@
         topicfield.appendChild(trytest)
         topicfield.appendChild(newfield)
         topicfield.appendChild(newline)
+
+        var count = document.getElementsByName("topic_count");
+        count[0].setAttribute("value",x);
+        x = x + 1;
     }
     function newobjective(){
         var newfield = document.createElement("input");
+        var y = "objective"
         var y1 = a.toString();
-        newfield.setAttribute("name", "objectives[]");
-        a = a + 1;
+        var z = y.concat(y1);
+        newfield.setAttribute("name", z);
         newfield.setAttribute("class","form-control");
         var objfield = document.getElementById("objectives");
         var newline = document.createElement("br");
@@ -86,6 +94,10 @@
         objfield.appendChild(trytest)
         objfield.appendChild(newfield)
         objfield.appendChild(newline)
+
+        var count = document.getElementsByName("obj_count");
+        count[0].setAttribute("value", a);
+        a = a + 1;
     }
 </script>
 {% endblock content %}

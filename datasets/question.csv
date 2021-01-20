@@ -1,0 +1,51 @@
+QuestionID (int),Question (text),Answer_1,Answer_2,Answer_3,Answer_4,Correct_Answer (character 1),Answer_Explanation,AssessmentID
+1,Is Python case sensitive when dealing with identifiers?,Yes,No,Machine dependent,None of the mentioned,A,Case is always significant.,1
+2,Which of the following is invalid?,_a = 1,__a = 1,__str__ = 1,None of the mentioned,D,All the statements will execute successfully but at the cost of reduced readability.,1
+3,Why are local variable names beginning with an underscore discouraged?,They are used to indicate a private variables of a class,They confuse the interpreter,They are used to indicate global variables,They slow down execution,A,"As Python has no concept of private variables, leading underscores are used to indicate variables that must not be accessed from outside the class.",1
+4,Which of the following is an invalid statement?,"abc = 1,000,000",a b c = 1000 2000 3000,"a,b,c = 1000, 2000, 3000","a_b_c = 1,000,000",B,Spaces are not allowed in variable names,1
+5,Which of the following cannot be a variable?,__init__,in,it,on,B,in is a keyword,1
+6,Which is the correct operator for power(xy)?,x^y,x**y,x^^y,None of the mentioned,B,"In python, power operator is x**y i.e. 2**3=8.",1
+7,Which one of these is floor division?,/,//,%,None of the mentioned,B,"When both of the operands are integer then python chops out the fraction part and gives you the round off value, to get the accurate answer use floor division. This is floor division. For ex, 5/2 = 2.5 but both of the operands are integer so answer of this expression in python is 2. To get the 2.5 answer, use floor division.",1
+8,"What is the answer to this expression, 22%3 is?",7,0,1,5,C,"Modulus operator gives the remainder. So, 22%3 gives the remainder, that is, 1.",1
+9,Which of these is not a core data type?,Lists,Dictionary,Tuples,Class,D,Class is a user defined data type,1
+10,"In python we do not specify types, it is directly interpreted by the compiler, so consider the following operation to be performed.
+
+>>> x = 13 ? 2
+
+objective is to make sure x has a integer value",x = 13 // 2 ,x = int(13/2),x = 13 % 2,All of the mentioned,D,// is integer operation in python 3.0 and int(..) is a type cast operator.,1
+11,"Find the output
+
+j = (x for x in range(3))
+for x in j:
+   print(x)",0 1 2,Error,0 1 2 0 1 2,None of the mentioned,A,The first statement creates a generator object.,2
+12,"Find the output
+
+j = 1
+while True:
+  if j%007 == 0:
+     break
+  print(j)
+  j += 1",1 2 3 4 5 6,1 2 3 4 5 6 7,Error,None of the mentioned,A,Control exits the loop when j becomes 7,2
+13,"Find the output
+
+j = 5
+while True:
+ if j%0011 == 0:
+    break
+ print(j)
+ j += 1",5 6 7 8 9 10,5 6 7 8,5 6,Error,B,0011 is an octal number,2
+14,"Find the output
+
+True = False
+while True:
+    print(True)
+    break",TRUE,FALSE,None,None of the mentioned,D,"SyntaxEror, True is a keyword and it's value cannot be changed",2
+15,"Find the output
+
+j = 0
+while j < 3:
+   print(j)
+   j += 1
+else:
+  print(0)
+",0 1 2 3 0,0 1 2 0,0 1 2,Error,B,The else part is executed when the condition in the while statement is false,2

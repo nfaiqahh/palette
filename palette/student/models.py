@@ -139,5 +139,4 @@ class Question(models.Model):
     ]
     Correct_Answer = models.CharField(max_length=1, choices=ANSWER_CHOICES, default='A')
     Answer_Explanation = models.TextField()
-    #Topics (array of topics according to CourseID in Assessment info) ArrayField
-    #Objectives (array of objectives according to CourseID in assessment)
+    Topics = models.ManyToManyField(CourseTopic)

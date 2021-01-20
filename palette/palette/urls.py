@@ -33,6 +33,8 @@ urlpatterns = [
     path('edit-lecturer-details', mainviews.editlecturer, name='editlecturer'),
     path('add-lecturer', mainviews.addlecturer, name='addlecturer'),
     path('updatelect', mainviews.updatelecturerdb, name='updatelect'), #redirect to 'viewlecturer'
+    # CLASS
+    path('updateclass', mainviews.updateclassdb, name='updateclass'), #redirect to course details
     # ADMIN
     path('admin', admin.site.urls),    
 ]

@@ -101,12 +101,14 @@ def viewcourse(request, id, courseid):
     course = Course.objects.get(id=id)
     course_topics = CourseTopic.objects.filter(CourseID=id)
     course_objectives = CourseObjective.objects.filter(CourseID=id)
-    class_available = Class.objects.filter(CourseID=id)    
+    class_available = Class.objects.filter(CourseID=id)
+    lecturer = Lecturer.objects.all()    
     context = {
         "course": course,
         "course_topics": course_topics,
         "course_objectives": course_objectives,
         "class_available": class_available,
+        "lecturer": lecturer,
     }
     return render(request, 'coursedetails.html', context)
 
@@ -170,34 +172,38 @@ def updatecoursedb(request):
             id = Course.objects.count()+1
             insertcourse = Course(id=id, CourseID=CourseID, Course_Name=Course_Name, Course_Description=Course_Description)
             insertcourse.save()
-            topics = request.POST['topics']
-            objectives = request.POST['objectives']
-            a = 1
-            for topic in topics:
-                t_id = CourseTopic.objects.count()+1
+            topic_count = request.POST['topic_count']
+            obj_count = request.POST['obj_count']
+
+            for a in range(int(topic_count)):
+                b = a + 1
+                c = "topic" + str(b)
+                TopicID = CourseTopic.objects.count()+1
+                Topic_Name = request.POST[c]
                 inserttopics = CourseTopic(
-                    TopicID=t_id,
-                    Topic_No=a,
-                    Topic_Name=topic,
-                    CourseID=insertcourse
+                    TopicID = TopicID,
+                    Topic_No = b,
+                    Topic_Name = Topic_Name,
+                    CourseID = insertcourse
                 )
                 inserttopics.save()
-                a = a + 1                
-            b = 1
-            for obj in objectives:
-                o_id = CourseObjective.objects.count()+1
-                if b < 10:
-                    Objective_No = "CO0" + str(b)
+
+            for b in range(int(obj_count)):
+                c = b + 1
+                d = "objective" + str(c)
+                ObjectiveID = CourseObjective.objects.count()+1
+                if c < 10:
+                    Objective_No = "CO0" + str(c)
                 else:
-                    Objective_No = "CO" + str(b)
+                    Objective_No = "CO" + str(c)
+                Objective_Name = request.POST[d]
                 insertobj = CourseObjective(
-                    ObjectiveID=o_id,
-                    Objective_No=Objective_No,
-                    Objective_Name=obj,
-                    CourseID=insertcourse
-                )
+                    ObjectiveID = ObjectiveID,
+                    Objective_No = Objective_No,
+                    Objective_Name = Objective_Name,
+                    CourseID = insertcourse
+                )            
                 insertobj.save()
-                b = b + 1
             messages.add_message(request, messages.INFO, 'Course succesfully created!')
             return redirect('mainmenu')
 
@@ -263,3 +269,24 @@ def updatelecturerdb(request):
 def addlecturer(request):
     context = {}
     return render(request, 'lectdetails-add.html', context)
+
+####################################
+# 4. CLASS
+####################################
+def updateclassdb(request):
+    ClassID = request.POST['ClassID']
+    LecturerID = request.POST['LecturerID']
+    id = request.POST['CourseID'] #single int
+    course = Course.objects.get(id=id)
+    lecturer = Lecturer.objects.get(id=LecturerID)
+    classid = Class.objects.count()+1
+    newclass = Class(
+        id=classid,
+        ClassID=ClassID,
+        CourseID=course,
+        Lecturer=lecturer
+    )
+    newclass.save()
+    messages.add_message(request, messages.INFO, 'Class successfully added!')
+    courseid = slugify(course.CourseID)
+    return redirect('viewcourse', id, courseid)
