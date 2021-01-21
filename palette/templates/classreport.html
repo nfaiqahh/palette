@@ -1,0 +1,73 @@
+{% extends "site-base.html" %}
+{% load static %}
+
+{% block title %}| Class{% endblock %}
+
+{% block headertitle %}Class Performance Report{% endblock headertitle %}
+
+{% block breadcrumbs %}
+<a href="{% url 'mainmenu' %}">Home</a><i class="fa fa-angle-double-right"></i>
+<span>{{classname.CourseID.Course_Name}} - {{classname.ClassID}}</span>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="ex-basic-2">
+    <div class="container">
+          <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <!-- Content 1: Course Name and Class -->
+                <div class="text-container">
+                    <h3>{{classname.CourseID.Course_Name}} - {{classname.ClassID}}</h3>
+                </div> <!-- end of content 1-->
+                
+                <!-- Content 2: Pie chart -->
+                <div class="text-container">
+                    <div class="right">
+                        pie chart of performance
+                    </div>
+                </div>
+                
+                <!-- Content 3: Download button -->
+                <div class="text-container">
+                    select assessment
+                    download button pdf & csv form
+                </div>
+
+                <!-- Content 4: List of Students-->
+                <div class="text-container">
+                <!-- Table -->
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Student ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Learning Progress</th>
+                        <th scope="col">Performance</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for students in students %}
+                        <tr>
+                            <td>
+                                {{ students.StudentID }}
+                            </td>    
+                            <td>
+                                {{ students.StudentName }}
+                            </td>
+                            <td>
+                                skill bar
+                            </td>
+                            <td>
+                                performance color
+                            </td>                            
+                        </tr>                        
+                        {% endfor %}                          
+                    </tbody>
+                  </table>
+                  <!-- end of table -->
+                </div> <!-- end of content 4 -->
+            </div> <!-- end of col-->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of ex-basic-2 -->
+{% endblock content %}

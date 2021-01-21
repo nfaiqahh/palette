@@ -4,11 +4,6 @@
 <li class="nav-item">
     <a class="nav-link page-scroll" href="{% url 'mainmenu' %}">Home <span class="sr-only">(current)</span></a>
 </li>
-{% if request.session.role == 'admin' %}
-<li class="nav-item">
-    <a class="nav-link popup-with-move-anim" href="#request">Request <span class="badge badge-warning"> New </span></a>
-</li>
-{% endif %}
 {% endblock base_navbar %}
 
 {% block base_header %}

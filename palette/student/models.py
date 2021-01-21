@@ -80,23 +80,6 @@ class CourseObjective(models.Model):
     Objective_Name = models.CharField(max_length=700)
 
 ################################
-# Request - Edit course details request
-################################
-class Request(models.Model):
-    RequestID = models.CharField(max_length=10) #eg: RQ + id = RQ1, RQ2...
-    CourseID = models.ForeignKey(
-        Course,
-        on_delete=models.CASCADE,
-        default='1'
-    )
-    Requestor = models.ForeignKey(
-        Lecturer,
-        on_delete=models.CASCADE,
-        default='1'
-    )
-    Status = models.BooleanField() #True: Approved, False: Denied
-
-################################
 # Assessment - Student's Assessment
 ################################
 class Assessment(models.Model):
@@ -108,6 +91,7 @@ class Assessment(models.Model):
         on_delete=models.CASCADE,
         default='1'
     )
+    AssignedClass = models.ManyToManyField(Class)
 
 ################################
 # Student - Student information
@@ -115,6 +99,7 @@ class Assessment(models.Model):
 class Student(models.Model):
     StudentID = models.IntegerField(primary_key=True)
     StudentName = models.CharField(max_length=500)
+    RegisteredClass = models.ManyToManyField(Class)
 
 ################################
 # Question - Assessment questions

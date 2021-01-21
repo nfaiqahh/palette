@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     #Palette APPS
     'student',
+    'report',
     
     #DJANGO APPS
     'django.contrib.admin',

@@ -102,7 +102,6 @@
             <div class="col-lg-12">
                 <h2>Courses & Classes</h2>
                 <a href="3.2-classreport.html">go to class report</a>
-                <a href="5.2-coursedetails.html">course details</a>
                 <!-- Table -->
                 <table class="table table-hover">
                     <thead>
@@ -122,7 +121,14 @@
                             value="{{ class.CourseID.CourseID }} - {{ class.CourseID.Course_Name }}"/>
                           </form>
                         </td>
-                        <td>{{ class.ClassID }}</td>                            
+                        <td>
+                          <form action="{% url 'classreport' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="Class_id" value="{{class.id}}">
+                            <input type="submit" style="background:none; border: none; color: #626262; text-decoration: underline; cursor: pointer;"
+                            value="{{ class.ClassID }}"/>
+                          </form>
+                        </td>                            
                       </tr>
                       {% endfor %}
                     </tbody>
