@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.template.defaultfilters import slugify
-from student.models import Admin, Lecturer, Class, Course, CourseTopic, CourseObjective
+from student.models import Admin, Lecturer, Class, Course, CourseTopic, CourseObjective, Assessment
 
 # Create your views here.
 # 
@@ -13,6 +13,7 @@ from student.models import Admin, Lecturer, Class, Course, CourseTopic, CourseOb
 # 1. Authentication
 # 2. Course
 # 3. Lecturer
+# 4. Class
 
 ####################################
 # 1. AUTHENTICATION
@@ -74,10 +75,12 @@ def home(request):
         name = loggedin.Lect_Name
         request.session['name'] = name
         classes = Class.objects.filter(Lecturer=loggedin.id)
+        assessments = Assessment.objects.filter(Lecturer=loggedin.id)
         template = 'lecturer.html'
         context = {
             "name": name,
             "classes": classes,
+            "assessments": assessments,
         }
  
     return render(request, template, context)

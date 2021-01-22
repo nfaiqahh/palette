@@ -3,7 +3,7 @@
 
 {% block title %}| Report{% endblock %}
 
-{% block headertitle %}Class Performance Report{% endblock headertitle %}
+{% block headertitle %}Student Performance Report{% endblock headertitle %}
 
 {% block breadcrumbs %}
 <a href="{% url 'mainmenu' %}">Home</a><i class="fa fa-angle-double-right"></i>
@@ -13,7 +13,7 @@
 {% block content %}
 <div class="ex-basic-2">
     <div class="container">
-        <div class="row">
+          <div class="row">
             <div class="col-lg-10 offset-lg-1">
                 <!-- Content 1: Course Name and Class -->
                 <div class="text-container">
@@ -29,14 +29,7 @@
                 
                 <!-- Content 3: Download button -->
                 <div class="text-container">
-                    <b>Assessments</b>
-                    <ol>
-                    {% for assessments in assessments %}
-                        <li>{{ assessments }}</li>
-                        {% empty %}
-                        <i>no assessments assigned to this class...</i>
-                    {% endfor %}
-                    </ol>
+                    select assessment
                     download button pdf & csv form
                 </div>
 
@@ -50,7 +43,6 @@
                         <th scope="col">Name</th>
                         <th scope="col">Learning Progress</th>
                         <th scope="col">Performance</th>
-                        <th scope="col"></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -67,11 +59,6 @@
                             </td>
                             <td>
                                 performance color
-                            </td>
-                            <td>
-                                <button style="border-style: none; border-radius: 5px;">
-                                    View Report
-                                </button>
                             </td>                            
                         </tr>                        
                         {% endfor %}                          

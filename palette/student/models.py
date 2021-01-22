@@ -92,6 +92,11 @@ class Assessment(models.Model):
         default='1'
     )
     AssignedClass = models.ManyToManyField(Class)
+    Lecturer = models.ForeignKey(
+        Lecturer,
+        on_delete=models.CASCADE,
+        default='11'
+    )
 
 ################################
 # Student - Student information
@@ -125,3 +130,37 @@ class Question(models.Model):
     Correct_Answer = models.CharField(max_length=1, choices=ANSWER_CHOICES, default='A')
     Answer_Explanation = models.TextField()
     Topics = models.ManyToManyField(CourseTopic)
+
+################################
+# Answer - Student's answer records
+################################
+class Answer(models.Model):
+    StudentID = models.ForeignKey(
+        Student,
+        on_delete=models.CASCADE
+    )
+    Question = models.ForeignKey(
+        Question,
+        on_delete=models.CASCADE
+    )
+    ANSWER_CHOICES = [
+        ('A', 'AnswerA'),
+        ('B', 'AnswerB'),
+        ('C', 'AnswerC'),
+        ('D', 'AnswerD'),
+    ]
+    Answer = models.CharField(max_length=1, choices=ANSWER_CHOICES, default='A')
+
+################################
+# Result - Students result in percentage
+################################
+class Result(models.Model):
+    Student = models.ForeignKey(
+        Student,
+        on_delete=models.CASCADE
+    )
+    Assessment = models.ForeignKey(
+        Assessment,
+        on_delete=models.CASCADE
+    )
+    Result = models.IntegerField()
