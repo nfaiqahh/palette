@@ -7,67 +7,111 @@
 
 {% block breadcrumbs %}
 <a href="{% url 'mainmenu' %}">Home</a><i class="fa fa-angle-double-right"></i>
-<span>{{classname.CourseID.Course_Name}} - {{classname.ClassID}}</span>
+<a href="/report/class/{{std_class.id}}">{{ std_class.CourseID.Course_Name }} - {{ std_class.ClassID }}</a><i class="fa fa-angle-double-right"></i>
+<span>{{ student.StudentName }}</span>
 {% endblock breadcrumbs %}
 
 {% block content %}
 <div class="ex-basic-2">
     <div class="container">
-          <div class="row">
+        <div class="row">
             <div class="col-lg-10 offset-lg-1">
                 <!-- Content 1: Course Name and Class -->
                 <div class="text-container">
-                    <h3>{{classname.CourseID.Course_Name}} - {{classname.ClassID}}</h3>
+                    <h3>{{ student.StudentName }}</h3>
+                    <h4>{{ student.StudentID }}</h4>
                 </div> <!-- end of content 1-->
-                
-                <!-- Content 2: Pie chart -->
-                <div class="text-container">
-                    <div class="right">
-                        pie chart of performance
-                    </div>
-                </div>
-                
-                <!-- Content 3: Download button -->
-                <div class="text-container">
-                    select assessment
-                    download button pdf & csv form
-                </div>
-
-                <!-- Content 4: List of Students-->
-                <div class="text-container">
-                <!-- Table -->
-                <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th scope="col">Student ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Learning Progress</th>
-                        <th scope="col">Performance</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {% for students in students %}
-                        <tr>
-                            <td>
-                                {{ students.StudentID }}
-                            </td>    
-                            <td>
-                                {{ students.StudentName }}
-                            </td>
-                            <td>
-                                skill bar
-                            </td>
-                            <td>
-                                performance color
-                            </td>                            
-                        </tr>                        
-                        {% endfor %}                          
-                    </tbody>
-                  </table>
-                  <!-- end of table -->
-                </div> <!-- end of content 4 -->
             </div> <!-- end of col-->
         </div> <!-- end of row -->
+        <div class="row">
+            <div class="col-lg-6 offset-lg-1">
+                <div class="text-container">
+                    <b>Filter by Assessment:</b>
+                    <br>
+                    <form action="" method="GET">
+                        <div class="form-row">
+                            <div class="col-7">
+                                <select name="assessment" id="" class="form-control mb-2" onload="SelectChoice()">
+                                    <option value="" selected disabled hidden>{{ assessment_name.Assessment_Name }}</option>
+                                    {% for assessment in assessment %}
+                                    <option value="{{ assessment.AssessmentID }}" id="{{ assessment.AssessmentID }}">{{ assessment.Assessment_Name }}</option>
+                                    {% empty %}
+                                    <option value="">--</option>                      
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn-solid-reg">
+                                    GO
+                                 </button>
+                            </div>                            
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <h5>{{ assessment_name.Assessment_Name }}</h5>
+                    <table class="table table-hover table-responsive border">
+                        <thead>
+                          <tr>
+                            <th scope="col">Question</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for answer in std_answer %}
+                            <tr>  
+                                <td style="word-wrap: break-word;">
+                                    <span style="white-space: pre-wrap;">{{ answer.Question.Question }}</span>
+                                    <br>
+                                    <br>
+                                    <b>Answer Choices:</b>
+                                    <br>
+                                    A. {{ answer.Question.Answer_1 }}
+                                    <br>
+                                    B. {{ answer.Question.Answer_2 }}
+                                    <br>
+                                    C. {{ answer.Question.Answer_3 }}
+                                    <br>
+                                    D. {{ answer.Question.Answer_4 }}
+                                    <br>
+                                    <br>
+                                    <b>Your Answer:</b> {{ answer.Answer }}
+                                    <br><br>
+                                    <b>Correct Answer:</b> {{ answer.Question.Correct_Answer }}
+                                    <br><br>
+                                    <b>Explanation:</b>
+                                    <br>
+                                    <i>{{ answer.Question.Answer_Explanation }}</i>
+                                </td>                            
+                            </tr>                        
+                            {% endfor %}                          
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+            <div class="col-lg-4 offset-lg-1">
+                <div class="text-container">
+                    <p class="right">
+                        download button
+                    </p>
+                </div>
+                <div class="text-container analysis">
+                    <div class="scorebox centertext">
+                        Score
+                        <br>
+                        <span class="score">80/100</span>
+                    </div>
+                    <div class="sidebox">
+                        class average score
+                    </div>
+                    <div class="sidebox">
+                        learning progress
+                    </div>
+                    <div class="sidebox">
+                        critical topic
+                    </div>                    
+                </div>
+            </div>
+        </div>
     </div> <!-- end of container -->
 </div> <!-- end of ex-basic-2 -->
 {% endblock content %}

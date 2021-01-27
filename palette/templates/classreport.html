@@ -32,7 +32,7 @@
                     <b>Assessments</b>
                     <ol>
                     {% for assessments in assessments %}
-                        <li>{{ assessments }}</li>
+                        <li>{{ assessments.Assessment_Name }}</li>
                         {% empty %}
                         <i>no assessments assigned to this class...</i>
                     {% endfor %}
@@ -69,9 +69,11 @@
                                 performance color
                             </td>
                             <td>
-                                <button style="border-style: none; border-radius: 5px;">
-                                    View Report
-                                </button>
+                                <a href="{{classname.id}}/{{students.StudentID}}">
+                                    <button type="submit" style="border-style: none; border-radius: 5px;">
+                                        View Report
+                                    </button>
+                                </a>
                             </td>                            
                         </tr>                        
                         {% endfor %}                          

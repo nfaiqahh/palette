@@ -19,8 +19,9 @@ from report import views as report
 
 urlpatterns = [
     # CLASS PERFORMANCE REPORT
-    path('class', report.viewclass, name='classreport'),
+    path('class/<int:Class_id>', report.viewclass, name='classreport'),
     # ASSESSMENT REPORT
     path('assessment', report.viewassessment, name='assessmentreport'),
     # STUDENT PERSONAL PERFORMANCE REPORT
+    path('class/<int:Class_id>/<int:StudentID>', report.viewstudent, name='viewstudent'),
 ]

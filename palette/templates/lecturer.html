@@ -119,12 +119,7 @@
                           </form>
                         </td>
                         <td>
-                          <form action="{% url 'classreport' %}" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="Class_id" value="{{class.id}}">
-                            <input type="submit" style="background:none; border: none; color: #626262; text-decoration: underline; cursor: pointer;"
-                            value="{{ class.ClassID }}"/>
-                          </form>
+                          <a href="report/class/{{class.id}}">{{ class.ClassID }}</a>
                         </td>                            
                       </tr>
                       {% endfor %}
