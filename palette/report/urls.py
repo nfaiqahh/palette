@@ -21,7 +21,8 @@ urlpatterns = [
     # CLASS PERFORMANCE REPORT
     path('class/<int:Class_id>', report.viewclass, name='classreport'),
     # ASSESSMENT REPORT
-    path('assessment', report.viewassessment, name='assessmentreport'),
+    path('assessment/<int:Assessment_id>', report.viewassessment, name='assessmentreport'),
+    path('printreport', report.printreport, name='print'),
     # STUDENT PERSONAL PERFORMANCE REPORT
     path('class/<int:Class_id>/<int:StudentID>', report.viewstudent, name='viewstudent'),
 ]

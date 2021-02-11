@@ -20,23 +20,49 @@
                     <h3>{{assessment.CourseID.Course_Name}}: {{assessment.Assessment_Name}}</h3>
                 </div> <!-- end of content 1-->
                 
-                <!-- Content 2: Bubble(?) chart -->
-                <div class="text-container">
-                    <div class="right">
-                        scores: highest, average, lowest
-                    </div>
-                </div>
-                
                 <!-- Content 3: Topic list & Download button -->
                 <div class="text-container">
-                    Topic list
-                    <p>
-                        dowload button
-                    </p>
+                    <h5>Topics</h5>
+                    <ul>
+                        {% for q in topic %}
+                        <li>
+                            Chapter {{ q.Topic_No }}: {{ q.Topic_Name }}
+                        </li>                 
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Content 2: Score Bubble -->
+                <div class="text-container">
+                    <h5>Scores</h5>
+                    <div style="width: 100px; height: 100px; text-align: center; border-radius: 50px; display: inline-block;" id="good">
+                        <br>
+                        <b>Highest</b>
+                        <h6>{{ highest }}%</h6>                        
+                    </div>
+                    <div style="width: 100px; height: 100px; text-align: center; border-radius: 50px; display: inline-block;" id="average">
+                        <br>
+                        <b>Average</b>
+                        <h6>{{ average }}%</h6>                        
+                    </div>
+                    <div style="width: 100px; height: 100px; text-align: center; border-radius: 50px; display: inline-block;" id="bad">
+                        <br>
+                        <b>Lowest</b>
+                        <h6>{{ lowest }}%</h6>                        
+                    </div>
                 </div>
 
                 <!-- Content 4: List of Questions-->
                 <div class="text-container">
+                <p class="right">
+                    Download as:
+                    <br>
+                    <a href="{% url 'print' %}" style="text-decoration: none;">PDF <i class="fas fa-file-pdf red"></i></a>
+                    <!--
+                        no need CSV for assessment report
+                        <a href="#2" style="text-decoration: none;">CSV <i class="fas fa-file-excel darkgreen"></i></a>
+                    -->
+                </p>
                 <!-- Table -->
                 <table class="table table-hover">
                     <thead>
@@ -46,10 +72,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        {% for questions in questions %}
-                        <tr>  
+                        {% for questions, accuracy in intotable %}
+                        <tr> 
                             <td>
-                                <span style="white-space: pre;">{{ questions.Question }}</span>
+                                <span style="white-space: pre-wrap;">{{ questions.Question }}</span>
                                 <br>
                                 <br>
                                 <b>Answer Choices:</b>
@@ -70,8 +96,8 @@
                                 <br>
                                 <i>{{ questions.Answer_Explanation }}</i>
                             </td>
-                            <td>
-                                accuracy donut/pie chart
+                            <td {% if accuracy == 100 %} id="good" {% elif accuracy <= 40 %} id="bad" {% endif %}>
+                                {{ accuracy }}%
                             </td>                            
                         </tr>                        
                         {% endfor %}                          

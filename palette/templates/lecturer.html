@@ -49,12 +49,7 @@
                       {% for assessments in assessments %}
                       <tr>                        
                         <td>
-                          <form action="{% url 'assessmentreport' %}" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="AssessmentID" value="{{assessments.AssessmentID}}">
-                            <input type="submit" style="background:none; border: none; color: #626262; text-decoration: underline; cursor: pointer;"
-                            value="{{assessments.Assessment_Name}}"/>
-                          </form>
+                          <a href="report/assessment/{{ assessments.AssessmentID }}">{{assessments.Assessment_Name}}</a>
                         </td>
                         <td>{{assessments.Assessment_Desc}}</td>
                         <td>{{assessments.CourseID.CourseID}}</td>

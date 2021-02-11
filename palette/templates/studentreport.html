@@ -95,23 +95,46 @@
                     </p>
                 </div>
                 <div class="text-container analysis">
-                    <div class="scorebox centertext">
-                        Score
+                    <!-- Change background-color according to scores -->
+                    {% if result.Result > avg %}                    
+                    <div class="scorebox centertext" style="background-color: #a3d292;">
+                        <h6>Score</h6>
+                        <span class="score">{{ result.Result }}%</span>
+                    </div>
+                    {% elif result.Result < avg %}
+                    <div class="scorebox centertext" style="background-color: #f69eaf;">
+                        <h6>Score</h6>
+                        <span class="score">{{ result.Result }}%</span>
+                    </div>      
+                    {% else %}
+                    <div class="scorebox centertext" style="background-color: #ebd78b;">
+                        <h6>Score</h6>
+                        <span class="score">{{ result.Result }}%</span>
+                    </div> 
+                    {% endif %}
+                    <!-- End of change background-color according to scores -->
+                    <div class="sidebox centertext">
+                        <h6>Class Average Score</h6>
+                        <span class="score">{{ avg }}%</span>                        
+                    </div>
+                    <div class="sidebox centertext">
+                        <h6>Learning Progress</h6>
                         <br>
-                        <span class="score">80/100</span>
+                        <div class="skill-container">
+                            <div class="skills"></div>
+                        </div>
+                        {{ LearningProgress }}%
                     </div>
-                    <div class="sidebox">
-                        class average score
-                    </div>
-                    <div class="sidebox">
-                        learning progress
-                    </div>
-                    <div class="sidebox">
-                        critical topic
+                    <div class="sidebox centertext">
+                        <h6>Critical Topic</h6>
                     </div>                    
                 </div>
             </div>
         </div>
     </div> <!-- end of container -->
 </div> <!-- end of ex-basic-2 -->
+<script>
+    var a = document.getElementsByClassName("skills")
+    a[0].style.width = "{{ LPjs|escapejs }}%"
+</script>
 {% endblock content %}
