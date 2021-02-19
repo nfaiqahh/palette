@@ -91,7 +91,10 @@
             <div class="col-lg-4 offset-lg-1">
                 <div class="text-container">
                     <p class="right">
-                        download button
+                        Download as:
+                        <br>
+                        <a href="{% url 'print' %}" style="text-decoration: none;"><b>PDF </b><i class="fas fa-file-pdf red"></i></a>
+                        <a href="#2" style="text-decoration: none;"><b>CSV </b><i class="fas fa-file-excel darkgreen"></i></a>                       
                     </p>
                 </div>
                 <div class="text-container analysis">
@@ -127,6 +130,15 @@
                     </div>
                     <div class="sidebox centertext">
                         <h6>Critical Topic</h6>
+                        <div style="width: 80%; margin: auto;">
+                            {% for t in criticaltopics %}
+                            <span><i class="fas fa-exclamation-circle red"></i></span>
+                            Chapter {{ t.Topic_No }} - {{ t.Topic_Name }}
+                            <br>
+                            {% empty %}
+                            <i>No critical topics. Good job!</i>
+                            {% endfor %}
+                        </div>
                     </div>                    
                 </div>
             </div>

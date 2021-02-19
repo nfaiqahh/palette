@@ -72,18 +72,20 @@
     <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
     <h3>New Assessment</h3>
     <br>
-    <h5>Assessment Name</h5>
-    <input type="text" class="form-control" name="" id="">
-    <br>
-    <h5>Course</h5>
-    <select class="form-control">
-      <option selected>Choose...</option>
-      <option>CourseID 1</option>
-      <option>CourseID 2</option>
-      <option>CourseID 3</option>
-    </select>
-    <br><br>
-    <a class="btn-solid-reg mfp-close page-scroll" href="4.3-newassessment.html">CREATE</a>
+    <form action="{% url 'createassessment' %}" method="POST">
+      {% csrf_token %}
+      <h5>Assessment Name</h5>
+      <input type="text" class="form-control" name="Assessment_Name">
+      <br>
+      <h5>Course</h5>
+      <select class="form-control" name="CourseID">
+        {% for course in course %}
+        <option value="{{course.id}}">{{course.CourseID}} - {{course.Course_Name}}</option>
+        {% endfor %}
+      </select>
+      <br><br>
+      <input type="submit" class="btn-outline-reg" value="CREATE">
+    </form>
   </div> <!-- end of container -->
 </div> <!-- end of lightbox-basic -->
 <!-- end of details lightbox 1 -->

@@ -14,6 +14,7 @@ from student.models import Admin, Lecturer, Class, Course, CourseTopic, CourseOb
 # 2. Course
 # 3. Lecturer
 # 4. Class
+# 5. Assessment
 
 ####################################
 # 1. AUTHENTICATION
@@ -62,8 +63,8 @@ def home(request):
         loggedin = Admin.objects.get(UserID=loggedinuser)
         name = loggedin.Admin_Name
         request.session['name'] = name
-        lecturers = Lecturer.objects.all()
-        courses = Course.objects.all()
+        lecturers = Lecturer.objects.all().order_by('id')
+        courses = Course.objects.all().order_by('id')
         template = 'admin.html'
         context = {
             "name": name,
@@ -75,12 +76,14 @@ def home(request):
         name = loggedin.Lect_Name
         request.session['name'] = name
         classes = Class.objects.filter(Lecturer=loggedin.id)
+        course = Course.objects.filter(class__in=classes).distinct()
         assessments = Assessment.objects.filter(Lecturer=loggedin.id)
         template = 'lecturer.html'
         context = {
             "name": name,
             "classes": classes,
             "assessments": assessments,
+            "course": course,
         }
  
     return render(request, template, context)
@@ -258,9 +261,9 @@ def updatelecturerdb(request):
         lecturerid = request.POST['LecturerID'] 
         Lect_Name = request.POST['Lect_Name']
         Lect_Email = request.POST['Lect_Email']
-        if Lecturer.objects.filter(UserID=lecturerid).exists():
-            messages.add_message(request, messages.ERROR, 'You wanted to add a new lecturer with the same ID, are you sure?')
-            return redirect('viewlecturer', lecturerid)
+        if User.objects.filter(username=lecturerid).exists():
+            messages.add_message(request, messages.ERROR, 'You wanted to add a new lecturer with existing ID. Process cancelled.')
+            return redirect('mainmenu')
         else:
             newlect = User.objects.create_user(lecturerid, Lect_Email, 'palette123')
             id = Lecturer.objects.count()+1
@@ -293,3 +296,37 @@ def updateclassdb(request):
     messages.add_message(request, messages.INFO, 'Class successfully added!')
     courseid = slugify(course.CourseID)
     return redirect('viewcourse', id, courseid)
+
+####################################
+# 5. ASSESSMENT
+####################################
+def createassessment(request):
+    if request.method == 'POST':
+        courseid = request.POST['CourseID']
+        loggedinuser = request.session['loggedinuser']
+        
+        Assessment_Name = request.POST['Assessment_Name']
+        CourseID = Course.objects.get(id=courseid)
+        LecturerID = Lecturer.objects.get(UserID=loggedinuser)
+
+        AssessmentID = Assessment.objects.count()+1
+        newassessment = Assessment(
+            AssessmentID=AssessmentID,
+            Assessment_Name=Assessment_Name,
+            Assessment_Desc=" ",
+            #AssignedClass=NULL,
+            CourseID=CourseID,
+            Lecturer=LecturerID
+        )
+        newassessment.save()
+    return redirect('addquestions', AssessmentID)
+
+def assessmentdetails(request, AssessmentID):
+    assessment = Assessment.objects.get(AssessmentID=AssessmentID)
+    context = {
+        "assessment": assessment,
+    }
+    return render(request, 'assessment-add.html', context)
+
+def updateassessment(request):
+    return rediect('home')

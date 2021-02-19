@@ -33,7 +33,8 @@
                         </div>
                         <div class="form-group">
                             <label for="lectemail">Lecturer Email</label>
-                            <input type="text" name="Lect_Email" class="form-control" value="{{ lecturer.Lect_Email }}">
+                            <input type="email" name="Lect_Email" class="form-control" pattern=".+@xuni.com" value="{{ lecturer.Lect_Email }}">
+                            <i>Example: email@xuni.com</i>
                         </div>                   
                     </div> <!-- end of content 2 -->
                     <input type="hidden" name="lecturerid" value="{{ lecturer.UserID }}">

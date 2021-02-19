@@ -20,6 +20,7 @@
                     <h3>{{classname.CourseID.Course_Name}} - {{classname.ClassID}}</h3>
                 </div> <!-- end of content 1-->
                 
+                {% if available == True %}
                 <!-- Content 2: Pie chart -->
                 <div class="text-container">
                     <div class="right">
@@ -37,11 +38,16 @@
                         <i>no assessments assigned to this class...</i>
                     {% endfor %}
                     </ol>
-                    download button pdf & csv form
                 </div>
 
                 <!-- Content 4: List of Students-->
                 <div class="text-container">
+                    <p class="right">
+                        Download as:
+                        <br>
+                        <a href="{% url 'print' %}" style="text-decoration: none;"><b>PDF </b><i class="fas fa-file-pdf red"></i></a>
+                        <a href="#2" style="text-decoration: none;"><b>CSV </b><i class="fas fa-file-excel darkgreen"></i></a>                       
+                    </p>
                 <!-- Table -->
                 <table class="table table-hover">
                     <thead>
@@ -63,7 +69,9 @@
                                 {{ students.StudentName }}
                             </td>
                             <td>
-                                skill bar
+                                <div class="skill-container">
+                                    <div class="skills"></div>                                  
+                                </div>
                             </td>
                             <td>
                                 performance color
@@ -81,8 +89,45 @@
                   </table>
                   <!-- end of table -->
                 </div> <!-- end of content 4 -->
+                {% else %}
+                <i>No report for this class yet...</i>
+                <br><br><br>
+                <!-- Table -->
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Student ID</th>
+                        <th scope="col">Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for students in students %}
+                        <tr>
+                            <td>
+                                {{ students.StudentID }}
+                            </td>    
+                            <td>
+                                {{ students.StudentName }}
+                            </td>                   
+                        </tr>                        
+                        {% endfor %}                          
+                    </tbody>
+                  </table>
+                {% endif %}
             </div> <!-- end of col-->
         </div> <!-- end of row -->
     </div> <!-- end of container -->
 </div> <!-- end of ex-basic-2 -->
+<script>
+    var a = document.getElementsByClassName("skills")
+    var lp = JSON.parse('{{LPjs|escapejs}}')
+
+    for (i = 0; i < lp.length; i++) {
+        var percentage = lp[i];
+        var value = percentage.toString();
+        var w = value.concat("%");
+        a[i].style.width = w;
+    }
+    
+</script>
 {% endblock content %}

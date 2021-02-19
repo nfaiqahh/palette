@@ -1,0 +1,37 @@
+{% extends "site-base.html" %}
+{% load static %}
+
+{% block title %}| Assessment{% endblock %}
+
+{% block headertitle %}Assessment Details{% endblock headertitle %}
+
+{% block breadcrumbs %}
+<a href="{% url 'mainmenu' %}">Home</a><i class="fa fa-angle-double-right"></i>
+<span>{{assessment.CourseID.Course_Name}} - {{assessment.Assessment_Name}}</span>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="ex-basic-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <!-- Content 1: List of Questions -->
+                <div class="text-container">
+                    <h3>{{assessment.Assessment_Name}}</h3>
+                    <br>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <h6>Assessment Description</h6>
+                        <br>
+                        <textarea class="form-control" name="Assessment_Desc" rows="3"></textarea>
+                        <br>
+                        <h6>Questions</h6>
+                        upload .csv file of questions
+                    </form>            
+                </div> <!-- end of content 1 -->
+                <!-- Content 2 -->
+            </div> <!-- end of col-->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of ex-basic-2 -->
+{% endblock content %}

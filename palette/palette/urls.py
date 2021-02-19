@@ -38,5 +38,8 @@ urlpatterns = [
     # REPORT
     path('report/', include('report.urls')),
     # ADMIN
-    path('admin', admin.site.urls),    
+    path('admin', admin.site.urls),
+    # ASSESSMENT
+    path('assessment', mainviews.createassessment, name='createassessment'),
+    path('assessment/<int:AssessmentID>', mainviews.assessmentdetails, name='addquestions'), #add questions into assessment page
 ]

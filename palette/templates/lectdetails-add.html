@@ -33,7 +33,8 @@
 
                         <div class="form-group">
                             <label for="lectemail" class="required">Lecturer Email</label>
-                            <input type="text" name="Lect_Email" class="form-control" required>
+                            <input type="email" name="Lect_Email" class="form-control" pattern=".+@xuni.com" required>
+                            <i>Example: email@xuni.com</i>
                         </div>
                         <input type="submit" class="btn-outline-reg back" value="CONFIRM">
                         <a class="btn-outline-reg back" href="{% url 'mainmenu' %}">CANCEL</a>

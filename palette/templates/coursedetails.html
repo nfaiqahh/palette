@@ -79,7 +79,9 @@
                             <h6>Class</h6>
                             <ul class="li-space-lg">
                                 {% for classes in class_available %}
-                                <li>{{classes.ClassID}}</li>
+                                <li>
+                                    <a href="/report/class/{{classes.id}}">{{classes.ClassID}}</a>
+                                </li>
                                 {% endfor %}
                             </ul>
                             {% endif %}

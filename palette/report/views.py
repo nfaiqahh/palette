@@ -22,19 +22,66 @@ from json import dumps
 # 1. CLASS PERFORMANCE REPORT
 ####################################
 def viewclass(request, Class_id):
-    students = Student.objects.filter(RegisteredClass=Class_id)
+    students = Student.objects.filter(RegisteredClass=Class_id).order_by('StudentID')
     classname = Class.objects.get(id=Class_id)
     assessments = Assessment.objects.filter(AssignedClass=Class_id)
-    
-    #analyze performance
+    available = True
 
-    #learning progress
+    if assessments.exists():
+        #analyze performance for each student
 
-    context = {
-        "students": students,
-        "classname": classname,
-        "assessments": assessments,
-    }
+        #learning progress for each student
+        learningprogress = [] # Array of learning progress for each student i.e: Student 1 = learningprogress[0] = 75
+        qIDs = []
+        for a in assessments:
+            ques = Question.objects.filter(AssessmentID=a.AssessmentID)
+            for q in ques:
+                qIDs.append(q.QuestionID) # Get all IDs of questions in the assessments
+        
+        topic = CourseTopic.objects.filter(question__in=qIDs).distinct() # Get topics in questions
+        for s in students:
+            answers = Answer.objects.filter(StudentID=s.StudentID, Question__in=qIDs) # Get all answers from students
+            if answers.exists():
+                topicPercentage = []
+                for t in topic:
+                    x = 0
+                    y = 0
+                    q = Question.objects.filter(Topics=t) # Get Questions under the topic
+                    for ans in answers: # For every answers from student
+                        if ans.Question in q: # Check if the answers is for the questions under the topic
+                            if (ans.Answer == ans.Question.Correct_Answer): # Check if answer is correct, add 1 to x
+                                x = x + 1
+                            y = y + 1 # Total of questions in the topic
+                    z = round((x / y)*100) # Calculate score for each topics
+                    topicPercentage.append(z)
+
+                totalPercentage = 0        
+                for t in topicPercentage:
+                    totalPercentage = totalPercentage + int(t)
+
+                lp = round(totalPercentage / (int(len(topicPercentage))))
+                learningprogress.append(lp)
+            else:
+                available = False
+                break
+            
+        LPjs = dumps(learningprogress)  
+
+        context = {
+            "students": students,
+            "classname": classname,
+            "assessments": assessments,
+            "LPjs": LPjs,
+            "available": available,
+        }
+    else:
+        available = False
+        context = {
+            "students": students,
+            "classname": classname,
+            "available": available
+        }
+
     return render(request, 'classreport.html', context)
 
 ####################################
@@ -163,14 +210,16 @@ def viewstudent(request, Class_id, StudentID):
         topicPercentage.append(z)
 
     totalPercentage = 0
+    criticaltopics = [] # List critical topics - (less than 35% accuracy) for sidebox
     for t in topicPercentage:
+        if (t <= 50):
+            index = topicPercentage.index(t)
+            criticaltopics.append(topic[index])
         totalPercentage = totalPercentage + int(t)
 
     LearningProgress = round(totalPercentage / (int(len(topicPercentage))))
-    LPjs = dumps(LearningProgress)   
-    
-    # List critical topics - (less than 35% accuracy) for sidebox
-    
+    LPjs = dumps(LearningProgress)
+
     context = {
         "std_class": std_class,
         "student": student,
@@ -181,5 +230,6 @@ def viewstudent(request, Class_id, StudentID):
         "avg": avg,
         "LearningProgress": LearningProgress,
         "LPjs": LPjs,
+        "criticaltopics": criticaltopics,
     }
     return render(request, 'studentreport.html', context)
