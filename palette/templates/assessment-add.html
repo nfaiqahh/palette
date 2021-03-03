@@ -19,14 +19,28 @@
                 <div class="text-container">
                     <h3>{{assessment.Assessment_Name}}</h3>
                     <br>
-                    <form action="" method="POST">
+                    <form action="{% url 'upload_q' %}" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <h6>Assessment Description</h6>
                         <br>
                         <textarea class="form-control" name="Assessment_Desc" rows="3"></textarea>
                         <br>
+                        <h6>Topic</h6>
+                        <select class="form-control" name="AssessmentTopic">
+                            {% for topics in topics %}
+                            <option value="{{topics.TopicID}}">Chapter {{topics.Topic_No}} - {{topics.Topic_Name}}</option>
+                            {% endfor %}
+                        </select>
+                        <br>
                         <h6>Questions</h6>
-                        upload .csv file of questions
+                        <input type="file" name="ques" accept=".csv">
+                        <br>
+                        <small>Header for the .csv file should be in this sequence: Question Text, Answer Choice A, Answer Choice B, Answer Choice C, Answer Choice D,
+                            Correct Answer (A/B/C/D), Answer Explanation, Topic (Topic. No)
+                        </small>
+                        <br>
+                        <input type="hidden" name="AssessmentID" value="{{assessment.AssessmentID}}">
+                        <input type="submit" class="btn-outline-reg back" value="CONFIRM">
                     </form>            
                 </div> <!-- end of content 1 -->
                 <!-- Content 2 -->

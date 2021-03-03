@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.template.defaultfilters import slugify
-from student.models import Admin, Lecturer, Class, Course, CourseTopic, CourseObjective, Assessment
+from student.models import Admin, Lecturer, Class, Course, CourseTopic, CourseObjective, Assessment, Question
+import csv, io
 
 # Create your views here.
 # 
@@ -323,10 +324,49 @@ def createassessment(request):
 
 def assessmentdetails(request, AssessmentID):
     assessment = Assessment.objects.get(AssessmentID=AssessmentID)
+    topics = CourseTopic.objects.filter(CourseID=assessment.CourseID)
     context = {
         "assessment": assessment,
+        "topics": topics,
     }
     return render(request, 'assessment-add.html', context)
 
-def updateassessment(request):
-    return rediect('home')
+def uploadquestions(request):    
+    # GET request returns the value of the data with the specified key.
+    if request.method == "POST":
+        #Assessment Description
+        id = request.POST['AssessmentID']
+        Assessment_Desc = request.POST['Assessment_Desc']
+        AssessmentTopic = request.POST['AssessmentTopic']
+
+        AssessmentID = Assessment.objects.get(AssessmentID=id)
+        AssessmentID.Assessment_Desc = Assessment_Desc
+        AssessmentID.save()
+
+        csv_file = request.FILES["ques"]
+        data_set = csv_file.read().decode('UTF-8')
+        # setup a stream which is when we loop through each line we are able to handle a data in a stream
+        io_string = io.StringIO(data_set)
+        next(io_string)
+        for column in csv.reader(io_string, delimiter=',', quotechar="|"):
+            QuestionID = Question.objects.count()+1
+            created = Question(
+                QuestionID = QuestionID,
+                AssessmentID = AssessmentID,
+                Question = column[0],
+                Answer_1 = column[1],
+                Answer_2 = column[2],
+                Answer_3 = column[3],
+                Answer_4 = column[4],
+                Correct_Answer = column[5],
+                Answer_Explanation = column[6],  
+            )
+            created.save()
+
+    questions = Question.objects.filter(AssessmentID=AssessmentID)
+    topic = CourseTopic.objects.filter(TopicID=AssessmentTopic)
+
+    for q in questions:
+        q.Topics.set(topic)
+
+    return redirect('assessmentreport', id)

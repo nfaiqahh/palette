@@ -20,13 +20,7 @@
                     <h3>{{classname.CourseID.Course_Name}} - {{classname.ClassID}}</h3>
                 </div> <!-- end of content 1-->
                 
-                {% if available == True %}
-                <!-- Content 2: Pie chart -->
-                <div class="text-container">
-                    <div class="right">
-                        pie chart of performance
-                    </div>
-                </div>
+                {% if available == True %} 
                 
                 <!-- Content 3: Download button -->
                 <div class="text-container">
@@ -40,13 +34,20 @@
                     </ol>
                 </div>
 
+                <!-- Content 2: Pie chart -->
+                <div class="text-container" align="center">
+                    <div style="width: 50%;">
+                        <b>Performance Summary</b>
+                        <canvas id="pie-chart"></canvas>
+                    </div>
+                </div>
+
                 <!-- Content 4: List of Students-->
                 <div class="text-container">
                     <p class="right">
                         Download as:
                         <br>
-                        <a href="{% url 'print' %}" style="text-decoration: none;"><b>PDF </b><i class="fas fa-file-pdf red"></i></a>
-                        <a href="#2" style="text-decoration: none;"><b>CSV </b><i class="fas fa-file-excel darkgreen"></i></a>                       
+                        <a href="{{ classname.id }}/print" target="_blank" style="text-decoration: none;"><b>PDF </b><i class="fas fa-file-pdf red"></i></a>                      
                     </p>
                 <!-- Table -->
                 <table class="table table-hover">
@@ -60,7 +61,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                        {% for students in students %}
+                        {% for students, performance in intotable %}
                         <tr>
                             <td>
                                 {{ students.StudentID }}
@@ -73,8 +74,9 @@
                                     <div class="skills"></div>                                  
                                 </div>
                             </td>
-                            <td>
-                                performance color
+                            <td align="center" {% if performance == "HIGH" %} style="background-color: #a3d292;" {% elif performance == "AVERAGE" %} style="background-color: #ebd78b;" 
+                            {% else %} style="background-color: #f69eaf;" {% endif %}>
+                                {{ performance }}
                             </td>
                             <td>
                                 <a href="{{classname.id}}/{{students.StudentID}}">
@@ -129,5 +131,29 @@
         a[i].style.width = w;
     }
     
+</script>
+<script>
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          backgroundColor: [
+            '#a3d292', '#ebd78b', '#f69eaf'
+          ],
+          label: 'Performance'
+        }],
+        labels: {{ labels|safe }}
+        },
+      options: {
+        responsive: true
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+    };
+
 </script>
 {% endblock content %}

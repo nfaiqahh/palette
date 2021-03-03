@@ -1,26 +1,18 @@
-{% extends "site-base.html" %}
+{% extends "pdf-base.html" %}
 {% load static %}
 
 {% block title %}| Report{% endblock %}
-
-{% block headertitle %}Assessment Report{% endblock headertitle %}
-
-{% block breadcrumbs %}
-<a href="{% url 'mainmenu' %}">Home</a><i class="fa fa-angle-double-right"></i>
-<span>{{assessment.CourseID.Course_Name}}: {{assessment.Assessment_Name}}</span>
-{% endblock breadcrumbs %}
 
 {% block content %}
 <div class="ex-basic-2">
     <div class="container">
           <div class="row">
             <div class="col-lg-10 offset-lg-1">
-                <!-- Content 1: Course Name and Class -->
-                <div class="text-container">
-                    <h3>{{assessment.CourseID.Course_Name}}: {{assessment.Assessment_Name}}</h3>
-                </div> <!-- end of content 1-->
+                <div align="center"><h1>ASSESSMENT REPORT</h1></div>
+                <span><b>Course: </b>{{ assessment.CourseID.CourseID }} - {{ assessment.CourseID.Course_Name }}</span><br>                    
+                <span><b>Assessment: </b>{{ assessment.Assessment_Name }}</span>
                 
-                <!-- Content 3: Topic list & Download button -->
+                <!-- Content 2: Topic list -->
                 <div class="text-container">
                     <h5>Topics</h5>
                     <ul>
@@ -33,38 +25,24 @@
                 </div>
 
                 {% if available == True %}
-                    <!-- Content 2: Score Bubble -->
+                    <!-- Content 3: Score Bubble -->
                     <div class="text-container">
                         <h5>Scores</h5>
-                        <div style="width: 100px; height: 100px; text-align: center; border-radius: 50px; display: inline-block;" id="good">
-                            <br>
-                            <b>Highest</b>
-                            <h6>{{ highest }}%</h6>                        
-                        </div>
-                        <div style="width: 100px; height: 100px; text-align: center; border-radius: 50px; display: inline-block;" id="average">
-                            <br>
-                            <b>Average</b>
-                            <h6>{{ average }}%</h6>                        
-                        </div>
-                        <div style="width: 100px; height: 100px; text-align: center; border-radius: 50px; display: inline-block;" id="bad">
-                            <br>
-                            <b>Lowest</b>
-                            <h6>{{ lowest }}%</h6>                        
-                        </div>
+                        <ul>
+                            <li>Highest: {{ highest }}%</li>
+                            <li>Average: {{ average }}%</li>
+                            <li>Lowest: {{ lowest }}%</li>
+                        </ul>
                     </div>
 
                     <!-- Content 4: List of Questions-->
                     <div class="text-container">
-                    <p class="right">
-                        Download as:
-                        <br>
-                        <a href="{{ assessment.AssessmentID }}/print" style="text-decoration: none;" target="_blank"><b>PDF </b><i class="fas fa-file-pdf red"></i></a>
-                    </p>
                     <!-- Table -->
-                    <table class="table table-hover">
+                    <br>
+                    <table border="0.5" align="center">
                         <thead>
                         <tr>
-                            <th scope="col">Question</th>
+                            <th scope="col" width="70%">Question</th>
                             <th scope="col">Accuracy</th>
                         </tr>
                         </thead>
@@ -93,7 +71,7 @@
                                     <br>
                                     <i>{{ questions.Answer_Explanation }}</i>
                                 </td>
-                                <td {% if accuracy == 100 %} id="good" {% elif accuracy <= 40 %} id="bad" {% endif %}>
+                                <td align="center">
                                     {{ accuracy }}%
                                 </td>                            
                             </tr>                        

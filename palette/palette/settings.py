@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     #Palette APPS
     'student',
     'report',
+    'easy_pdf',
     
     #DJANGO APPS
     'django.contrib.admin',

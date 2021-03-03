@@ -41,5 +41,6 @@ urlpatterns = [
     path('admin', admin.site.urls),
     # ASSESSMENT
     path('assessment', mainviews.createassessment, name='createassessment'),
+    path('upload_q', mainviews.uploadquestions, name='upload_q'),
     path('assessment/<int:AssessmentID>', mainviews.assessmentdetails, name='addquestions'), #add questions into assessment page
 ]

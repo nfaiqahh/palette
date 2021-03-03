@@ -93,8 +93,7 @@
                     <p class="right">
                         Download as:
                         <br>
-                        <a href="{% url 'print' %}" style="text-decoration: none;"><b>PDF </b><i class="fas fa-file-pdf red"></i></a>
-                        <a href="#2" style="text-decoration: none;"><b>CSV </b><i class="fas fa-file-excel darkgreen"></i></a>                       
+                        <a href="/report/class/{{ std_class.id }}/{{ student.StudentID }}/{{ assessment_name.AssessmentID }}/print" target="_blank" style="text-decoration: none;"><b>PDF </b><i class="fas fa-file-pdf red"></i></a>                      
                     </p>
                 </div>
                 <div class="text-container analysis">

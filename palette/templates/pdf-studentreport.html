@@ -1,0 +1,91 @@
+{% extends "pdf-base.html" %}
+{% load static %}
+
+{% block title %}| Report{% endblock %}
+
+{% block content %}
+<div class="ex-basic-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <!-- Content 1: Course Name and Class -->
+                <div class="text-container">
+                    <div align="center"><h1>STUDENT PERSONAL PERFORMANCE REPORT</h1></div>
+                    <span><b>Name: </b>{{ student.StudentName }}</span><br>
+                    <span><b>Student ID: </b>{{ student.StudentID }}</span><br>
+                    <span><b>Course: </b>{{ assessment_name.CourseID.CourseID }} - {{ assessment_name.CourseID.Course_Name }}</span><br>                    
+                    <span><b>Assessment: </b>{{ assessment_name.Assessment_Name }}</span>
+                </div> <!-- end of content 1-->
+            </div> <!-- end of col-->
+        </div> <!-- end of row -->
+        <div class="row">
+            <div class="col-lg-6 offset-lg-1">
+                <div>
+                    <div class="col-lg-4 offset-lg-1">
+                        <div class="text-container analysis">
+                            <br>
+                            <b>Report Summary</b>
+                            <br>
+                            Score: {{ result.Result }}%
+                            <br>
+                            Class Average Score: {{ avg }}%
+                            <br>
+                            Learning Progress: {{ LearningProgress }}%
+                            <br>
+                            Critical Topic:
+                            <ul>
+                                {% for t in criticaltopics %}
+                                <li>Chapter {{ t.Topic_No }} - {{ t.Topic_Name }}</li>
+                                {% empty %}
+                                <i>No critical topics. Good job!</i>
+                                {% endfor %}
+                            </ul>                  
+                        </div>
+                    </div>
+                    <br>
+                    <table border="0.5" align="center">
+                        <thead>
+                          <tr>
+                            <th scope="col">Question</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for answer in std_answer %}
+                            <tr>  
+                                <td style="word-wrap: break-word;">
+                                    <span style="white-space: pre-wrap;">{{ answer.Question.Question }}</span>
+                                    <br>
+                                    <br>
+                                    <b>Answer Choices:</b>
+                                    <br>
+                                    A. {{ answer.Question.Answer_1 }}
+                                    <br>
+                                    B. {{ answer.Question.Answer_2 }}
+                                    <br>
+                                    C. {{ answer.Question.Answer_3 }}
+                                    <br>
+                                    D. {{ answer.Question.Answer_4 }}
+                                    <br>
+                                    <br>
+                                    <b>Your Answer:</b> {{ answer.Answer }}
+                                    <br><br>
+                                    <b>Correct Answer:</b> {{ answer.Question.Correct_Answer }}
+                                    <br><br>
+                                    <b>Explanation:</b>
+                                    <br>
+                                    <i>{{ answer.Question.Answer_Explanation }}</i>
+                                </td>                            
+                            </tr>                        
+                            {% endfor %}                          
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end of container -->
+</div> <!-- end of ex-basic-2 -->
+<script>
+    var a = document.getElementsByClassName("skills")
+    a[0].style.width = "{{ LPjs|escapejs }}%"
+</script>
+{% endblock content %}

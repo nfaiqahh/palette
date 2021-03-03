@@ -113,7 +113,7 @@ class Question(models.Model):
     QuestionID = models.AutoField(primary_key=True)
     AssessmentID = models.ForeignKey(
         Assessment,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         default='1'
     )
     Question = models.TextField()

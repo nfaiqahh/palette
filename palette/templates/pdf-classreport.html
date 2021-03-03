@@ -1,0 +1,131 @@
+{% extends "pdf-base.html" %}
+{% load static %}
+
+{% block title %}| Report{% endblock %}
+
+{% block content %}
+<div class="ex-basic-2">
+    <div class="container">
+        <div class="row">
+            <div align="center"><h1>CLASS PERFORMANCE REPORT</h1></div>
+            <div class="col-lg-10 offset-lg-1">
+                <!-- Content 1: Course Name and Class Name -->
+                <div class="text-container">
+                    <span><b>Course: </b>{{ classname.CourseID.CourseID }} - {{classname.CourseID.Course_Name}}</span><br>
+                    <span><b>Class: </b>{{ classname.ClassID }}</span>
+                </div> <!-- end of content 1-->
+                
+                {% if available == True %} 
+                
+                <!-- Content 2: Assessments assigned to the class -->
+                <div class="text-container">
+                    <b>Assigned Assessments:</b>
+                    <ol>
+                    {% for assessments in assessments %}
+                        <li>{{ assessments.Assessment_Name }}</li>
+                        {% empty %}
+                        <i>no assessments assigned to this class...</i>
+                    {% endfor %}
+                    </ol>
+                </div>
+
+                <!-- Content 4: Report-->
+                <div class="text-container">
+                    <!-- Table -->
+                    <br>
+                    <table border="0.5" align="center">
+                        <thead>
+                        <tr>
+                            <th scope="col">Student ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Learning Progress</th>
+                            <th scope="col">Performance</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for students, performance, learningprogress in intotable %}
+                            <tr>
+                                <td align="center">
+                                    {{ students.StudentID }}
+                                </td>    
+                                <td align="center">
+                                    {{ students.StudentName }}
+                                </td>
+                                <td align="center">
+                                    {{ learningprogress }}%
+                                </td>
+                                <td align="center">
+                                    {{ performance|title }}
+                                </td>                       
+                            </tr>                        
+                            {% endfor %}                          
+                        </tbody>
+                    </table>
+                    <!-- end of table -->
+                </div> <!-- end of content 4 -->
+                {% else %}
+                <i>No report for this class yet...</i>
+                <br><br><br>
+                <!-- Table -->
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Student ID</th>
+                        <th scope="col">Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for students in students %}
+                        <tr>
+                            <td>
+                                {{ students.StudentID }}
+                            </td>    
+                            <td>
+                                {{ students.StudentName }}
+                            </td>                   
+                        </tr>                        
+                        {% endfor %}                          
+                    </tbody>
+                  </table>
+                {% endif %}
+            </div> <!-- end of col-->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of ex-basic-2 -->
+<script>
+    var a = document.getElementsByClassName("skills")
+    var lp = JSON.parse('{{LPjs|escapejs}}')
+
+    for (i = 0; i < lp.length; i++) {
+        var percentage = lp[i];
+        var value = percentage.toString();
+        var w = value.concat("%");
+        a[i].style.width = w;
+    }
+    
+</script>
+<script>
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          backgroundColor: [
+            '#a3d292', '#ebd78b', '#f69eaf'
+          ],
+          label: 'Performance'
+        }],
+        labels: {{ labels|safe }}
+        },
+      options: {
+        responsive: true
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+    };
+
+</script>
+{% endblock content %}

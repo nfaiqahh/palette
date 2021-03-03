@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Website Title -->
+    <title>Palette {% block title %}{% endblock %}</title>
+    
+    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,600,700,700i&amp;subset=latin-ext" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/fontawesome-all.css' %}" rel="stylesheet">
+    <link href="{% static 'css/swiper.css' %}" rel="stylesheet">
+	<link href="{% static 'css/magnific-popup.css' %}" rel="stylesheet">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+	
+	<!-- Favicon  -->
+    <style>
+        .required:after{
+            content: " *";
+            color: red;
+            font-size: xx-large;
+            margin: 0px 0px 0px 0px;
+            padding: 0 0 0 0;
+        }
+        
+        .skill-container {
+            width: 80%;
+            background-color: #F2F3F4;
+            margin: auto;
+            border-radius: 25px;
+        }
+
+        .skills {
+            text-align: right;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: white;
+            /* width: 90%; */
+            background-color: #797D7F;
+            border-radius: 25px
+        }
+        th, td {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body data-spy="scroll" data-target=".fixed-top">
+
+    <img src="{% static 'images/logo.png' %}" alt="Palette Logo" width="100">
+
+    <!-- Content -->
+    {% block content %}
+    {% endblock content %}
+    <!-- end of Content -->    
+    	
+    <!-- Scripts -->
+    <script src="{% static 'js/jquery.min.js' %}"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
+    <script src="{% static 'js/popper.min.js' %}"></script> <!-- Popper tooltip library for Bootstrap -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script> <!-- Bootstrap framework -->
+    <script src="{% static 'js/jquery.easing.min.js' %}"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
+    <script src="{% static 'js/swiper.min.js' %}"></script> <!-- Swiper for image and text sliders -->
+    <script src="{% static 'js/jquery.magnific-popup.js' %}"></script> <!-- Magnific Popup for lightboxes -->
+    <script src="{% static 'js/validator.min.js' %}"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
+    <script src="{% static 'js/scripts.js' %}"></script> <!-- Custom scripts -->
+</body>
+</html>

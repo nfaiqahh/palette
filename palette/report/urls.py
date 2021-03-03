@@ -20,9 +20,11 @@ from report import views as report
 urlpatterns = [
     # CLASS PERFORMANCE REPORT
     path('class/<int:Class_id>', report.viewclass, name='classreport'),
+    path('class/<int:Class_id>/print', report.print_class, name='printclass'),
     # ASSESSMENT REPORT
     path('assessment/<int:Assessment_id>', report.viewassessment, name='assessmentreport'),
-    path('printreport', report.printreport, name='print'),
+    path('assessment/<int:Assessment_id>/print', report.print_assessment, name='printassessment'),
     # STUDENT PERSONAL PERFORMANCE REPORT
     path('class/<int:Class_id>/<int:StudentID>', report.viewstudent, name='viewstudent'),
+    path('class/<int:Class_id>/<int:StudentID>/<int:AssessmentID>/print', report.print_student, name='printstudent'),
 ]

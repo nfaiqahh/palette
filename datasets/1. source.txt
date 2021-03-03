@@ -3,10 +3,5 @@ admin.csv - https://www.random-name-generator.com/malaysia?country=ms_MY&gender=
 student.csv - random name generator
 course.csv, course_topic.csv - https://www.registrar.ucla.edu/Academics/Course-Descriptions/Course-Details?SA=COM+SCI&funsel=3
 assessment.csv, question.csv - https://www.sanfoundry.com/1000-python-questions-answers/
-
-
-
-
-
 ***Python course & Assessment sample - https://www.sanfoundry.com/1000-python-questions-answers/
 
