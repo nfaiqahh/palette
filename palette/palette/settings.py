@@ -24,9 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '9e_n4!e553zon9o-q*zsz6duppc1i02luc=eoh0=y64%$(s645'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'palette-analytics.herokuapp.com'
+]
 
 
 # Application definition
