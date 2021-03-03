@@ -27,7 +27,9 @@ SECRET_KEY = '9e_n4!e553zon9o-q*zsz6duppc1i02luc=eoh0=y64%$(s645'
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'palette-analytics.herokuapp.com'
+    'palette-analytics.herokuapp.com',
+    '0.0.0.0',
+    '127.0.0.1'
 ]
 
 
